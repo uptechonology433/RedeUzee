@@ -17,6 +17,3 @@ RewriteRule ^ index.php [QSA,L]
     Header always set Access-Control-Max-Age "10000"
     
 </IfModule>
-
-
-

@@ -30,9 +30,10 @@ $app -> get('/decodfy' , function($request , $response) {
 
 // ================== Production ==================
 
- $app -> get('/production' , ProductionController::class . ':Productsinproduction')
- -> add(new jwtDateTime())
- -> add(jwtAuth());
+
+$app -> post('/production' , ProductionController::class . ':Productsinproduction')
+-> add(new jwtDateTime())
+-> add(jwtAuth());
 
 // =================================================
 

@@ -109,5 +109,11 @@ final class ProductionReportModel
         return $this;
     }
 
+    public function setFinal(string $finalProcessinDate): ProductionReportModel{
+        $this->finalshippingdate = $finalProcessinDate;
+
+        return $this;
+    }
+
     
 }
