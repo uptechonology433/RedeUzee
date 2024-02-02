@@ -88,7 +88,32 @@ const PageHome: React.FC = () => {
                 ];
             case "elo":
                 return [
-                    // ... colunas específicas para "elo"
+                    {
+                        name: 'Codigo do produto',
+                        selector: (row: any) => row.cod_produto,
+                        sortable: true
+                    },
+                    {
+                        name: 'Nome do arquivo',
+                        selector: (row: any) => row.nome_arquivo_proc
+                    },
+                    {
+                        name: 'Desc do Produto',
+                        selector: (row: any) => row.desc_produto
+                    },
+                    {
+                        name: 'Data Pros',
+                        selector: (row: any) => row.dt_processamento
+                    },
+                    {
+                        name: 'Data op',
+                        selector: (row: any) => row.dt_expedicao
+                    },
+                    {
+                        name: 'Quantidade de cartões',
+                        selector: (row: any) => row.total_cartoes,
+                        sortable: true
+                    },
                 ];
             default:
                 return [];
@@ -135,16 +160,18 @@ const PageHome: React.FC = () => {
                 setTypeMessageInProduction(true)
             });
 
-        await api.get('/awaiting-release')
+            await api.get('/awaiting-release')
             .then((data) => {
-                if(formValues.Type === "tarja"){
-                    setAwaitingRelease(data.data[1])    
-                }else{
-                    setAwaitingRelease(data.data[0]) 
+                if (formValues.Type === "tarja") {
+                    setAwaitingRelease(data.data[1]);
+                } else if (formValues.Type === "chip") {
+                    setAwaitingRelease(data.data[0]);
+                } else {
+                    setAwaitingRelease(data.data[2]);
                 }
-                 
-            }).catch(() => {
-                setTypeMessageAwaitingRelease(true)
+            })
+            .catch(() => {
+                setTypeMessageAwaitingRelease(true);
             });
         }
 
