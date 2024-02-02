@@ -12,22 +12,26 @@ class ProductionDAO extends Connection{
 
     public function getAllProductsInProductionTarja(string $data) : array {
         $products = $this -> pdo
-            ->query("SELECT * from view_verocard_producao_tarja;")->fetchAll(\PDO::FETCH_ASSOC);
+            ->query("SELECT * from view_verocard_producao_tarja  WHERE (dt_expedicao IS NULL);")->fetchAll(\PDO::FETCH_ASSOC);
 
             return $products;
     }
 
     public function getAllProductsInProductionChip(string $data) : array {
       $products = $this -> pdo
-          ->query("SELECT * from view_verocard_producao_chip;")->fetchAll(\PDO::FETCH_ASSOC);
+          ->query("SELECT * from view_verocard_producao_chip WHERE (dt_expedicao IS NULL);")->fetchAll(\PDO::FETCH_ASSOC);
 
           return $products;
   }
 
-  public function getAllProductsInProductionElo(string $data) : array {
-    $products = $this -> pdo
-        ->query("SELECT * from view_verocard_elo_producao;")->fetchAll(\PDO::FETCH_ASSOC);
+  public function getAllProductsInProductionElo(string $data): array {
+    $products = $this->pdo
+        ->query("SELECT * FROM view_verocard_elo_producao WHERE (dt_expedicao IS NULL);")
+        ->fetchAll(\PDO::FETCH_ASSOC);
 
-        return $products;
+    return $products;
 }
+
+
+
 }

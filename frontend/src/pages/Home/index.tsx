@@ -51,6 +51,10 @@ const PageHome: React.FC = () => {
                         selector: (row: any) => row.dt_expedicao
                     },
                     {
+                        name: 'Data opsss',
+                        selector: (row: any) => row.dt_expedicao
+                    },
+                    {
                         name: 'Quantidade de cartões',
                         selector: (row: any) => row.total_cartoes,
                         sortable: true
@@ -74,6 +78,10 @@ const PageHome: React.FC = () => {
                     {
                         name: 'Data Pros',
                         selector: (row: any) => row.dt_processamento
+                    },
+                    {
+                        name: 'Data opsss',
+                        selector: (row: any) => row.dt_expedicao
                     },
                        {
                         name: 'Quantidade de cartões',
@@ -106,7 +114,7 @@ const PageHome: React.FC = () => {
                         selector: (row: any) => row.dt_processamento
                     },
                     {
-                        name: 'Data op',
+                        name: 'Data opsss',
                         selector: (row: any) => row.dt_expedicao
                     },
                     {
