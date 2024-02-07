@@ -9,8 +9,12 @@ import Select from "../../components/shared/Select";
 const PageHome: React.FC = () => {
     const [inProductionData, setInProductionData] = useState([]);
     const [awaitingReleaseData, setAwaitingRelease] = useState([]);
+    const [awaitingShipmentData, setAwaitingShipment] = useState([]);
+    const [dispatchedData, setDispatched] = useState([]);
     const [typeMessageInProduction, setTypeMessageInProduction] = useState(false);
     const [typeMessageAwaitingRelease, setTypeMessageAwaitingRelease] = useState(false);
+    const [typeMessageAwaitingShipment, setTypeMessageAwaitingShipment] = useState(false);
+    const [typeMessageDispatched, setTypeMessageDispatched] = useState(false);
     const [formValues, setFormValues] = useState({ Type: "tarja" });
 
 
@@ -21,7 +25,7 @@ const PageHome: React.FC = () => {
             [e.target.name]: selectedType,
         });
         setColumnsInProduction(getColumnsByType(selectedType));
-       
+
     };
 
 
@@ -43,19 +47,12 @@ const PageHome: React.FC = () => {
                         selector: (row: any) => row.desc_produto
                     },
                     {
-                        name: 'Data Pros',
-                        selector: (row: any) => row.dt_processamento
-                    },
-                    {
                         name: 'Data op',
                         selector: (row: any) => row.dt_expedicao
                     },
+                 
                     {
-                        name: 'Data opsss',
-                        selector: (row: any) => row.dt_expedicao
-                    },
-                    {
-                        name: 'Quantidade de cartões',
+                        name: 'Qtd de cartões',
                         selector: (row: any) => row.total_cartoes,
                         sortable: true
                     },
@@ -80,19 +77,11 @@ const PageHome: React.FC = () => {
                         selector: (row: any) => row.dt_processamento
                     },
                     {
-                        name: 'Data opsss',
-                        selector: (row: any) => row.dt_expedicao
-                    },
-                       {
-                        name: 'Quantidade de cartões',
-                        selector: (row: any) => row.rastreio,
-                        sortable: true
-                    },
-                    {
-                        name: 'Rastreio',
+                        name: 'Qrd de cartões',
                         selector: (row: any) => row.total_cartoes,
                         sortable: true
                     },
+                   
                 ];
             case "elo":
                 return [
@@ -114,11 +103,7 @@ const PageHome: React.FC = () => {
                         selector: (row: any) => row.dt_processamento
                     },
                     {
-                        name: 'Data opsss',
-                        selector: (row: any) => row.dt_expedicao
-                    },
-                    {
-                        name: 'Quantidade de cartões',
+                        name: 'Qtd de cartões',
                         selector: (row: any) => row.total_cartoes,
                         sortable: true
                     },
@@ -152,8 +137,72 @@ const PageHome: React.FC = () => {
             selector: (row: any) => row.dt_processamento
         },
         {
-            name: 'Data de liberação',
+            name: 'Qtd cartões',
+            selector: (row: any) => row.total_cartoes
+        }
+    ];
+
+    const columnsAwaitingShipment: Array<Object> = [
+        {
+            name: 'Codigo do produto',
+            selector: (row: any) => row.cod_produto,
+            sortable: true
+        },
+        {
+            name: 'Nome do arquivo',
+            selector: (row: any) => row.nome_arquivo_proc
+
+        },
+        {
+            name: 'Desc do Produto',
+            selector: (row: any) => row.desc_produto
+
+        },
+        {
+            name: 'Data de entrada',
+            selector: (row: any) => row.dt_processamento
+        },
+        {
+            name: 'Qtd cartões',
+            selector: (row: any) => row.total_cartoes
+        },
+        {
+            name : 'Rastreio',
+            selector: (row: any) => row.rastreio
+        }
+    ];
+
+    const columnsDispatched: Array<Object> = [
+        {
+            name: 'Codigo do produto',
+            selector: (row: any) => row.cod_produto,
+            sortable: true
+        },
+        {
+            name: 'Nome do arquivo',
+            selector: (row: any) => row.nome_arquivo_proc
+
+        },
+        {
+            name: 'Desc do Produto',
+            selector: (row: any) => row.desc_produto
+
+        },
+        {
+            name: 'Data de entrada',
+            selector: (row: any) => row.dt_processamento
+        },
+        {
+            name: 'Data de saida',
             selector: (row: any) => row.dt_expedicao
+        },
+        {
+            name: 'Qtd cartões',
+            selector: (row: any) => row.total_cartoes
+        },
+        {
+            name : 'Rastreio',
+            selector: (row: any) => row.rastreio
         }
     ];
 
@@ -162,37 +211,65 @@ const PageHome: React.FC = () => {
         const HomePageRequests = async () => {
 
             await api.post('/production', { tipo: formValues.Type })
-            .then((data) => {
-                setInProductionData(data.data)
-            }).catch(() => {
-                setTypeMessageInProduction(true)
-            });
+                .then((data) => {
+                    setInProductionData(data.data)
+                }).catch(() => {
+                    setTypeMessageInProduction(true)
+                });
 
             await api.get('/awaiting-release')
-            .then((data) => {
-                if (formValues.Type === "tarja") {
-                    setAwaitingRelease(data.data[1]);
-                } else if (formValues.Type === "chip") {
-                    setAwaitingRelease(data.data[0]);
-                } else {
-                    setAwaitingRelease(data.data[2]);
-                }
-            })
-            .catch(() => {
-                setTypeMessageAwaitingRelease(true);
-            });
+                .then((data) => {
+                    if (formValues.Type === "tarja") {
+                        setAwaitingRelease(data.data[1]);
+                    } else if (formValues.Type === "chip") {
+                        setAwaitingRelease(data.data[0]);
+                    } else {
+                        setAwaitingRelease(data.data[2]);
+                    }
+                })
+                .catch(() => {
+                    setTypeMessageAwaitingRelease(true);
+                });
+
+                await api.get('/awaiting-shipment')
+                .then((data) => {
+                    if (formValues.Type === "tarja") {
+                        setAwaitingShipment(data.data[1]);
+                    } else if (formValues.Type === "chip") {
+                        setAwaitingShipment(data.data[0]);
+                    } else {
+                        setAwaitingShipment(data.data[2]);
+                    }
+                })
+                .catch(() => {
+                    setTypeMessageAwaitingShipment(true);
+                });
+
+                await api.get('/dispatched')
+                .then((data) => {
+                    if (formValues.Type === "tarja") {
+                        setDispatched(data.data[1]);
+                    } else if (formValues.Type === "chip") {
+                        setDispatched(data.data[0]);
+                    } else {
+                        setDispatched(data.data[2]);
+                    }
+                })
+                .catch(() => {
+                    setTypeMessageDispatched(true);
+                });
         }
 
         HomePageRequests()
 
     }, [formValues]);
 
-   
-
-    
 
 
-   
+
+
+
+
 
 
 
@@ -206,22 +283,35 @@ const PageHome: React.FC = () => {
                 <option value="tarja" selected>Tarja</option>
 
                 <option value="chip">Chip</option>
-                
+
                 <option value="elo">Elo</option>
 
             </Select>
-            <Table
-                data={Array.isArray(inProductionData) ? inProductionData : []}
-                column={columnsInProduction}
-                titleTable="Em produção"
-                typeMessage={typeMessageInProduction}
-            />
+
             <Table
                 data={Array.isArray(awaitingReleaseData) ? awaitingReleaseData : []}
                 column={columnsAwaitingRelease}
                 titleTable="Aguardando liberação"
                 typeMessage={typeMessageAwaitingRelease}
             />
+            <Table
+                data={Array.isArray(inProductionData) ? inProductionData : []}
+                column={columnsInProduction}
+                titleTable="Em produção"
+                typeMessage={typeMessageInProduction}
+            />
+
+            <Table
+                data={Array.isArray(awaitingShipmentData) ? awaitingShipmentData : []}
+                column={columnsAwaitingShipment}
+                titleTable="Aguardando Expedição"
+                typeMessage={typeMessageAwaitingShipment} />
+
+            <Table
+                data={Array.isArray(dispatchedData) ? dispatchedData : []}
+                column={columnsDispatched}
+                titleTable="Expedidos"
+                typeMessage={typeMessageDispatched} />
         </div >
     )
 }

@@ -14,9 +14,13 @@ class AwaitingReleaseDAO extends Connection{
     public function getAllAwaitingReleaseChip() : array {
 
         $productsAwaitingRelease = $this -> pdo
-            ->query(" SELECT * from view_verocard_producao_chip where dt_expedicao ISNULL 
-            GROUP BY cod_produto,desc_produto,dt_processamento,dt_expedicao,nome_arquivo_proc,total_cartoes,rastreio,status ;") 
+            ->query("SELECT  * FROM view_verocard_AwaitingRelease_chip") 
             ->fetchAll(\PDO::FETCH_ASSOC);
+
+            foreach ($productsAwaitingRelease as &$product) {
+                $product['dt_processamento'] = date('d/m/Y', strtotime($product['dt_processamento']));
+              
+            }
 
             return $productsAwaitingRelease;
 
@@ -26,9 +30,13 @@ class AwaitingReleaseDAO extends Connection{
     public function getAllAwaitingReleaseTarja() : array {
 
         $productsAwaitingRelease = $this -> pdo
-            ->query(" SELECT * from view_verocard_producao_tarja where dt_expedicao ISNULL 
-            GROUP BY cod_produto,desc_produto,dt_processamento,dt_expedicao,nome_arquivo_proc,total_cartoes,status ;") 
+            ->query(" SELECT  * FROM view_verocard_AwaitingRelease_tarja")
             ->fetchAll(\PDO::FETCH_ASSOC);
+
+            foreach ($productsAwaitingRelease as &$product) {
+                $product['dt_processamento'] = date('d/m/Y', strtotime($product['dt_processamento']));
+              
+            }
 
             return $productsAwaitingRelease;
 
@@ -37,9 +45,13 @@ class AwaitingReleaseDAO extends Connection{
     public function getAllAwaitingReleaseElo() : array {
 
         $productsAwaitingRelease = $this -> pdo
-            ->query(" SELECT * from view_verocard_elo_producao where dt_expedicao ISNULL 
-            GROUP BY cod_produto,desc_produto,dt_processamento,dt_expedicao,nome_arquivo_proc,total_cartoes ;") 
+            ->query(" SELECT * from view_verocard_AwaitingRelease_elo;") 
             ->fetchAll(\PDO::FETCH_ASSOC);
+
+            foreach ($productsAwaitingRelease as &$product) {
+                $product['dt_processamento'] = date('d/m/Y', strtotime($product['dt_processamento']));
+              
+            }
 
             return $productsAwaitingRelease;
 

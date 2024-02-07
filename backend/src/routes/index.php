@@ -6,6 +6,8 @@ use App\Controllers\AdminUsers\AdminUsersController;
 use App\Controllers\Auth\AuthController;
 use App\Controllers\Production\ProductionController;
 use App\Controllers\AwaitingRelease\AwaitingReleaseController;
+use App\Controllers\AwaitingShipment\AwaitingShipmentController;
+use App\Controllers\Dispatched\DispatchedController;
 use App\Controllers\ProductionReport\ProductionReportController;
 use App\Controllers\Stock\StockController;
 use App\Middlewares\adminConference;
@@ -44,6 +46,21 @@ $app -> get('/awaiting-release' , AwaitingReleaseController::class . ':AwaitingR
 -> add(new jwtDateTime())
 -> add(jwtAuth());
 
+// ==================================================
+
+
+// ================== Awaiting shipment =============
+
+$app -> get('/awaiting-shipment' , AwaitingShipmentController::class . ':AwaitingShipment')
+-> add(new jwtDateTime())
+-> add(jwtAuth());
+// ==================================================
+
+// ================== Awaiting dispached =============
+
+$app -> get('/dispatched' , DispatchedController::class . ':Dispatched')
+-> add(new jwtDateTime())
+-> add(jwtAuth());
 // ==================================================
 
 // ================== Production Report =============
