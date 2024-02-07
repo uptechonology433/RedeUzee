@@ -30,7 +30,7 @@ class AwaitingReleaseDAO extends Connection{
     public function getAllAwaitingReleaseTarja() : array {
 
         $productsAwaitingRelease = $this -> pdo
-            ->query(" SELECT  * FROM view_verocard_AwaitingRelease_tarja")
+            ->query("SELECT  * FROM view_verocard_AwaitingRelease_tarja")
             ->fetchAll(\PDO::FETCH_ASSOC);
 
             foreach ($productsAwaitingRelease as &$product) {
@@ -45,7 +45,7 @@ class AwaitingReleaseDAO extends Connection{
     public function getAllAwaitingReleaseElo() : array {
 
         $productsAwaitingRelease = $this -> pdo
-            ->query(" SELECT * from view_verocard_AwaitingRelease_elo;") 
+            ->query("SELECT * from view_verocard_AwaitingRelease_elo;") 
             ->fetchAll(\PDO::FETCH_ASSOC);
 
             foreach ($productsAwaitingRelease as &$product) {

@@ -111,6 +111,10 @@ const PageHome: React.FC = () => {
         {
             name : 'Rastreio',
             selector: (row: any) => row.rastreio
+        },
+        {
+            name : 'Empresa',
+            selector: (row: any) => row.empresa
         }
     ];
 
@@ -145,6 +149,10 @@ const PageHome: React.FC = () => {
         {
             name : 'Rastreio',
             selector: (row: any) => row.rastreio
+        },
+        {
+            name : 'Empresa',
+            selector: (row: any) => row.empresa
         }
     ];
 
