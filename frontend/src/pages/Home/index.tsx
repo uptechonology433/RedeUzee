@@ -19,102 +19,44 @@ const PageHome: React.FC = () => {
 
 
     const handleChange = (e: any) => {
-        const selectedType = e.target.value;
         setFormValues({
             ...formValues,
-            [e.target.name]: selectedType,
-        });
-        setColumnsInProduction(getColumnsByType(selectedType));
-
-    };
+            [e.target.name]: e.target.value
+        })
+    }
 
 
-    const getColumnsByType = (type: string) => {
-        switch (type) {
-            case "tarja":
-                return [
-                    {
-                        name: 'Codigo do produto',
-                        selector: (row: any) => row.cod_produto,
-                        sortable: true
-                    },
-                    {
-                        name: 'Nome do arquivo',
-                        selector: (row: any) => row.nome_arquivo_proc
-                    },
-                    {
-                        name: 'Desc do Produto',
-                        selector: (row: any) => row.desc_produto
-                    },
-                    {
-                        name: 'Data op',
-                        selector: (row: any) => row.dt_expedicao
-                    },
-                 
-                    {
-                        name: 'Qtd de cartões',
-                        selector: (row: any) => row.total_cartoes,
-                        sortable: true
-                    },
-                ];
-            case "chip":
-                return [
-                    {
-                        name: 'Codigo do produto',
-                        selector: (row: any) => row.cod_produto,
-                        sortable: true
-                    },
-                    {
-                        name: 'Nome do arquivo',
-                        selector: (row: any) => row.nome_arquivo_proc
-                    },
-                    {
-                        name: 'Desc do Produto',
-                        selector: (row: any) => row.desc_produto
-                    },
-                    {
-                        name: 'Data Pros',
-                        selector: (row: any) => row.dt_processamento
-                    },
-                    {
-                        name: 'Qrd de cartões',
-                        selector: (row: any) => row.total_cartoes,
-                        sortable: true
-                    },
-                   
-                ];
-            case "elo":
-                return [
-                    {
-                        name: 'Codigo do produto',
-                        selector: (row: any) => row.cod_produto,
-                        sortable: true
-                    },
-                    {
-                        name: 'Nome do arquivo',
-                        selector: (row: any) => row.nome_arquivo_proc
-                    },
-                    {
-                        name: 'Desc do Produto',
-                        selector: (row: any) => row.desc_produto
-                    },
-                    {
-                        name: 'Data Pros',
-                        selector: (row: any) => row.dt_processamento
-                    },
-                    {
-                        name: 'Qtd de cartões',
-                        selector: (row: any) => row.total_cartoes,
-                        sortable: true
-                    },
-                ];
-            default:
-                return [];
+    const columnsInProduction: Array<Object> = [
+        {
+            name: 'Codigo do produto',
+            selector: (row: any) => row.cod_produto,
+            sortable: true
+        },
+        {
+            name: 'Nome do arquivo',
+            selector: (row: any) => row.nome_arquivo_proc,
 
-        }
-    };
+        },
+        {
+            name: 'Desc do Produto',
+            selector: (row: any) => row.desc_produto,
 
-    const [columnsInProduction, setColumnsInProduction] = useState(getColumnsByType("tarja"));
+
+        },
+        {
+            name: 'Data Pros',
+            selector: (row: any) => row.dt_processamento
+
+        },
+        {
+            name: 'Quantidade de cartões',
+            selector: (row: any) => row.total_cartoes,
+            sortable: true
+        },
+    ];
+
+
+  
 
     const columnsAwaitingRelease: Array<Object> = [
         {
@@ -294,11 +236,13 @@ const PageHome: React.FC = () => {
                 titleTable="Aguardando liberação"
                 typeMessage={typeMessageAwaitingRelease}
             />
-            <Table
+              <Table
                 data={Array.isArray(inProductionData) ? inProductionData : []}
                 column={columnsInProduction}
                 titleTable="Em produção"
                 typeMessage={typeMessageInProduction}
+
+
             />
 
             <Table
