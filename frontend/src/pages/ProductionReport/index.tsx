@@ -65,23 +65,30 @@ const PageProductionReport: React.FC = () => {
         },
         {
             name: 'Nome do arquivo',
-            selector: (row: any) => row.total_cartoes
+            selector: (row: any) => row.nome_arquivo_proc
         },
         {
             name: 'Status',
             selector: (row: any) => row.dt_expedicao ? 'Expedido' : row.status
         },
         {
+            name: 'Qtd cartões',
+            selector: (row: any) => row.total_cartoes
+        },
+        {
             name: 'Rastreio',
             selector: (row: any) => row.rastreio
         },
+
+       
+       
     ];
 
 
 
     const ProductionReportRequests = async () => {
 
-        if (formValues.cardType === 'Tarja' || formValues.cardType === 'Chip') {
+        if (formValues.cardType === 'Tarja' || formValues.cardType === 'Chip' || formValues.cardType === 'Elo') {
 
             if (formValues.InitialProcessingDate < formValues.FinalProcessingDate
                 || formValues.InitialShippingDate < formValues.FinalShippingDate
@@ -96,6 +103,7 @@ const PageProductionReport: React.FC = () => {
                 }).then((data) => {
 
                     setProductionReportData(data.data)
+                    console.log("Response from API:", data);
 
                 }).catch(() => {
 
@@ -161,6 +169,8 @@ const PageProductionReport: React.FC = () => {
                             <option value="Tarja">Tarja</option>
 
                             <option value="Chip">Chip</option>
+
+                            <option value="Elo">Elo</option>
 
                         </Select>
 

@@ -109,13 +109,14 @@ const PageHome: React.FC = () => {
             selector: (row: any) => row.total_cartoes
         },
         {
-            name : 'Rastreio',
-            selector: (row: any) => row.rastreio
-        },
-        {
             name : 'Empresa',
             selector: (row: any) => row.empresa
+        },
+        {
+            name : 'Rastreio',
+            selector: (row: any) => row.rastreio
         }
+       
     ];
 
     const columnsDispatched: Array<Object> = [
@@ -147,13 +148,14 @@ const PageHome: React.FC = () => {
             selector: (row: any) => row.total_cartoes
         },
         {
-            name : 'Rastreio',
-            selector: (row: any) => row.rastreio
-        },
-        {
             name : 'Empresa',
             selector: (row: any) => row.empresa
+        },
+        {
+            name : 'Rastreio',
+            selector: (row: any) => row.rastreio
         }
+       
     ];
 
     useEffect(() => {
@@ -256,7 +258,7 @@ const PageHome: React.FC = () => {
             <Table
                 data={Array.isArray(awaitingShipmentData) ? awaitingShipmentData : []}
                 column={columnsAwaitingShipment}
-                titleTable="Aguardando Expedição"
+                titleTable="Aguardando expedição"
                 typeMessage={typeMessageAwaitingShipment} />
 
             <Table

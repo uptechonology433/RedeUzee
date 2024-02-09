@@ -40,12 +40,15 @@
                 margin-top: 42px;
                 width: clamp(25rem, 34vw, 32.75rem);
                 padding: 16px;
+            
+
 
                 p {
                     text-align: center;
                     color: $color-blue;
                     font-weight: $font-semibold;
                     font-size: clamp(0.9rem, 2vw, 1rem);
+                    font-size: 30px;
                 }
             }
 

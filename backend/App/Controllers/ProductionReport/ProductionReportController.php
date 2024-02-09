@@ -117,7 +117,39 @@ final class ProductionReportController
                 $productionReport = "Preencha os campos corretamente!";
 
             }
+        }else if (!empty(trim($data['tipo'])) &&  $data['tipo']  === 'Elo') {
+            
+        if (!empty(trim($data['arquivo']))) {
+
+            $productionReport = $productionReportDAO->getProductionReportFilterFileEloDAO($productionReportModel);
+
+        } else if (
+            !empty(trim($data['dataInicial'])) && !empty(trim($data['dataFinal']))
+            && empty(trim($data['expedicaoInicial'])) && empty(trim($data['expedicaoFinal']))
+        ) {
+
+            $productionReport = $productionReportDAO->getProductionReportFilterDateEloDAO($productionReportModel);
+
+        } else if (
+            !empty(trim($data['expedicaoInicial'])) && !empty(trim($data['expedicaoFinal']))
+            && empty(trim($data['dataInicial'])) && empty(trim($data['dataFinal']))
+        ) {
+
+            $productionReport = $productionReportDAO->getProductionReportFilterShippingEloDAO($productionReportModel);
+
+        } else if (
+            !empty(trim($data['expedicaoInicial'])) && !empty(trim($data['expedicaoFinal']))
+            && !empty(trim($data['dataInicial'])) && !empty(trim($data['dataFinal']))
+        ) {
+
+            $productionReport = $productionReportDAO->getProductionReportFilterDatesInGeneralEloDAO($productionReportModel);
+
+        } else {
+
+            $productionReport = "Preencha os campos corretamente!";
+
         }
+    }
 
         $response = $response->withJson($productionReport);
 

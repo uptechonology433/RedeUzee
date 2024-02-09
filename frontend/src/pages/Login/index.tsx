@@ -87,7 +87,7 @@ const PageLoguin: React.FC = () => {
                     </div>
 
                     <div className="greetings-up">
-                        <p>Acompanhe o nosso trabalho de perto e obtenha diversas informações sobre o andamento da fabricação dos seus cartões !</p>
+                        <p >UP! Manager</p>
                     </div>
 
                     <div className="image-user-login">
