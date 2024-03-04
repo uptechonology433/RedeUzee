@@ -15,10 +15,8 @@ final class AwaitingReleaseController
         $productionDAO = new AwaitingReleaseDAO();
         
         $production = [
-
-            $productionDAO -> getAllAwaitingReleaseChip(),
             $productionDAO -> getAllAwaitingReleaseTarja(),
-            $productionDAO -> getAllAwaitingReleaseElo()
+
 
         ];
 

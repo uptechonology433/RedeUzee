@@ -11,10 +11,10 @@ class AwaitingShipmentDAO extends Connection{
         parent::__construct();
     }
 
-    public function getAllAwaitingShipmentChip() : array {
+    public function getAllAwaitingShipmentTarja() : array {
 
         $productsAwaitingShipment = $this -> pdo
-            ->query("SELECT  * FROM view_verocard_AwaitingShipment_chip;") 
+            ->query("SELECT * FROM view_truckpag_AwaitingShipment_tarja;")
             ->fetchAll(\PDO::FETCH_ASSOC);
 
             foreach ($productsAwaitingShipment as &$product) {
@@ -27,35 +27,6 @@ class AwaitingShipmentDAO extends Connection{
     }
 
     
-    public function getAllAwaitingShipmentTarja() : array {
-
-        $productsAwaitingShipment = $this -> pdo
-            ->query("SELECT * FROM view_verocard_AwaitingShipment_tarja;")
-            ->fetchAll(\PDO::FETCH_ASSOC);
-
-            foreach ($productsAwaitingShipment as &$product) {
-                $product['dt_processamento'] = date('d/m/Y', strtotime($product['dt_processamento']));
-              
-            }
-
-            return $productsAwaitingShipment;
-
-    }
-
-    public function getAllAwaitingShipmentElo() : array {
-
-        $productsAwaitingShipment = $this -> pdo
-            ->query(" SELECT * from view_verocard_AwaitingShipment_elo;") 
-            ->fetchAll(\PDO::FETCH_ASSOC);
-
-            foreach ($productsAwaitingShipment as &$product) {
-                $product['dt_processamento'] = date('d/m/Y', strtotime($product['dt_processamento']));
-              
-            }
-
-            return $productsAwaitingShipment;
-
-    }
 
 
 }

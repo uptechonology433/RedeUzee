@@ -15,7 +15,7 @@
     .container-login {
         width: clamp(52.5rem, 70vw, 67.5rem);
         height: 704px;
-        background-color: $color-white;
+        background-color: #165259;
         border-radius: 16px;
         display: flex;
 
@@ -100,7 +100,7 @@
             h1,
             p {
                 text-align: center;
-                color: $color-client;
+                color: $color-white;
             }
 
             h1 {

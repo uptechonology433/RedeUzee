@@ -2,29 +2,47 @@ import React, { useEffect, useState } from "react";
 import api from "../../connectionAPI";
 import Table from "../../components/shared/Table";
 import DefaultHeader from "../../components/layout/DefaultHeader";
-import Select from "../../components/shared/Select";
-
 
 
 const PageHome: React.FC = () => {
+
     const [inProductionData, setInProductionData] = useState([]);
-    const [awaitingReleaseData, setAwaitingRelease] = useState([]);
     const [awaitingShipmentData, setAwaitingShipment] = useState([]);
+    const [awaitingReleaseData, setAwaitingRelease] = useState([]);
     const [dispatchedData, setDispatched] = useState([]);
     const [typeMessageInProduction, setTypeMessageInProduction] = useState(false);
     const [typeMessageAwaitingRelease, setTypeMessageAwaitingRelease] = useState(false);
     const [typeMessageAwaitingShipment, setTypeMessageAwaitingShipment] = useState(false);
     const [typeMessageDispatched, setTypeMessageDispatched] = useState(false);
-    const [formValues, setFormValues] = useState({ Type: "tarja" });
 
 
-    const handleChange = (e: any) => {
-        setFormValues({
-            ...formValues,
-            [e.target.name]: e.target.value
-        })
-    }
+ 
 
+    const columnsAwaitingRelease: Array<Object> = [
+        {
+            name: 'Codigo do produto',
+            selector: (row: any) => row.cod_produto,
+            sortable: true
+        },
+        {
+            name: 'Nome do arquivo',
+            selector: (row: any) => row.nome_arquivo_proc
+
+        },
+        {
+            name: 'Desc do Produto',
+            selector: (row: any) => row.desc_produto
+
+        },
+        {
+            name: 'Data de entrada',
+            selector: (row: any) => row.dt_processamento
+        },
+        {
+            name: 'Qtd cartões',
+            selector: (row: any) => row.total_cartoes
+        }
+    ];
 
     const columnsInProduction: Array<Object> = [
         {
@@ -55,219 +73,125 @@ const PageHome: React.FC = () => {
         },
     ];
 
-
-  
-
-    const columnsAwaitingRelease: Array<Object> = [
-        {
-            name: 'Codigo do produto',
-            selector: (row: any) => row.cod_produto,
-            sortable: true
-        },
-        {
-            name: 'Nome do arquivo',
-            selector: (row: any) => row.nome_arquivo_proc
-
-        },
-        {
-            name: 'Desc do Produto',
-            selector: (row: any) => row.desc_produto
-
-        },
-        {
-            name: 'Data de entrada',
-            selector: (row: any) => row.dt_processamento
-        },
-        {
-            name: 'Qtd cartões',
-            selector: (row: any) => row.total_cartoes
-        }
-    ];
-
     const columnsAwaitingShipment: Array<Object> = [
         {
-            name: 'Codigo do produto',
-            selector: (row: any) => row.cod_produto,
+            name: 'Ordem de produção',
+            selector: (row: any) => row.id_ordem_producao_status,
             sortable: true
         },
         {
-            name: 'Nome do arquivo',
-            selector: (row: any) => row.nome_arquivo_proc
-
-        },
-        {
-            name: 'Desc do Produto',
-            selector: (row: any) => row.desc_produto
+            name: 'Id op',
+            selector: (row: any) => row.id_op
 
         },
         {
             name: 'Data de entrada',
-            selector: (row: any) => row.dt_processamento
+            selector: (row: any) => row.dt_status
         },
         {
-            name: 'Qtd cartões',
-            selector: (row: any) => row.total_cartoes
-        },
-        {
-            name : 'Empresa',
-            selector: (row: any) => row.empresa
-        },
-        {
-            name : 'Rastreio',
-            selector: (row: any) => row.rastreio
+            name: 'Data de liberação',
+            selector: (row: any) => row.dt_finalizado
         }
-       
     ];
 
     const columnsDispatched: Array<Object> = [
         {
-            name: 'Codigo do produto',
-            selector: (row: any) => row.cod_produto,
+            name: 'Ordem de produção',
+            selector: (row: any) => row.id_ordem_producao_status,
             sortable: true
         },
         {
-            name: 'Nome do arquivo',
-            selector: (row: any) => row.nome_arquivo_proc
-
-        },
-        {
-            name: 'Desc do Produto',
-            selector: (row: any) => row.desc_produto
+            name: 'Id op',
+            selector: (row: any) => row.id_op
 
         },
         {
             name: 'Data de entrada',
-            selector: (row: any) => row.dt_processamento
+            selector: (row: any) => row.dt_status
         },
         {
-            name: 'Data de saida',
-            selector: (row: any) => row.dt_expedicao
-        },
-        {
-            name: 'Qtd cartões',
-            selector: (row: any) => row.total_cartoes
-        },
-        {
-            name : 'Empresa',
-            selector: (row: any) => row.empresa
-        },
-        {
-            name : 'Rastreio',
-            selector: (row: any) => row.rastreio
+            name: 'Data de liberação',
+            selector: (row: any) => row.dt_finalizado
         }
-       
     ];
 
     useEffect(() => {
 
         const HomePageRequests = async () => {
-
-            
             await api.get('/awaiting-release')
                 .then((data) => {
-                    if (formValues.Type === "tarja") {
-                        setAwaitingRelease(data.data[1]);
-                    } else if (formValues.Type === "chip") {
-                        setAwaitingRelease(data.data[0]);
-                    } else {
-                        setAwaitingRelease(data.data[2]);
-                    }
-                })
-                .catch(() => {
+                    console.log("Dados recebidos da rota /awaiting-release:", data.data);
+                    setAwaitingRelease(data.data);
+                }).catch(() => {
                     setTypeMessageAwaitingRelease(true);
                 });
-
-            await api.post('/production', { tipo: formValues.Type })
+    
+                await api.post('/production')
                 .then((data) => {
+                    console.log('teste')
                     setInProductionData(data.data)
+                   
                 }).catch(() => {
                     setTypeMessageInProduction(true)
                 });
-
-
-                await api.get('/awaiting-shipment')
+    
+            await api.get('/awaiting-shipment')
                 .then((data) => {
-                    if (formValues.Type === "tarja") {
-                        setAwaitingShipment(data.data[1]);
-                    } else if (formValues.Type === "chip") {
-                        setAwaitingShipment(data.data[0]);
-                    } else {
-                        setAwaitingShipment(data.data[2]);
-                    }
-                })
-                .catch(() => {
+                    console.log("Dados recebidos da rota /awaiting-shipment:", data.data);
+                    setAwaitingShipment(data.data);
+                }).catch((error) => {
+                    console.error("Erro ao obter dados da rota /awaiting-shipment:", error);
                     setTypeMessageAwaitingShipment(true);
                 });
-
-                await api.get('/dispatched')
+    
+            await api.get('/dispatcheds')
                 .then((data) => {
-                    if (formValues.Type === "tarja") {
-                        setDispatched(data.data[1]);
-                    } else if (formValues.Type === "chip") {
-                        setDispatched(data.data[0]);
-                    } else {
-                        setDispatched(data.data[2]);
-                    }
-                })
-                .catch(() => {
+                    console.log("Dados recebidos da rota /dispatcheds:", data.data);
+                    setDispatched(data.data);
+                }).catch((error) => {
+                    console.error("Erro ao obter dados da rota /dispatcheds:", error);
                     setTypeMessageDispatched(true);
                 });
         }
-
-        HomePageRequests()
-
-    }, [formValues]);
-
-
-
-
-
-
-
-
-
+    
+        HomePageRequests();
+    
+    }, []);
+    
 
     return (
         <div className="container-page-home">
 
             <DefaultHeader />
 
-            <Select info={"Selecione o tipo de cartão:"} name="Type" onChange={handleChange}>
-
-                <option value="tarja" selected>Tarja</option>
-
-                <option value="chip">Chip</option>
-
-                <option value="elo">Elo</option>
-
-            </Select>
-
             <Table
-                data={Array.isArray(awaitingReleaseData) ? awaitingReleaseData : []}
+                data={Array.isArray(awaitingReleaseData) ? awaitingReleaseData[0] : []}
                 column={columnsAwaitingRelease}
                 titleTable="Aguardando liberação"
                 typeMessage={typeMessageAwaitingRelease}
             />
-              <Table
-                data={Array.isArray(inProductionData) ? inProductionData : []}
+
+            <Table
+                data={Array.isArray(inProductionData) ? inProductionData: []}
                 column={columnsInProduction}
                 titleTable="Em produção"
                 typeMessage={typeMessageInProduction}
-
-
             />
 
             <Table
                 data={Array.isArray(awaitingShipmentData) ? awaitingShipmentData : []}
                 column={columnsAwaitingShipment}
-                titleTable="Aguardando expedição"
-                typeMessage={typeMessageAwaitingShipment} />
+                titleTable="Aguardando Expedição"
+                typeMessage={typeMessageAwaitingShipment}
+            />
+
 
             <Table
                 data={Array.isArray(dispatchedData) ? dispatchedData : []}
                 column={columnsDispatched}
                 titleTable="Expedidos"
-                typeMessage={typeMessageDispatched} />
+                typeMessage={typeMessageDispatched}
+            />
         </div >
     )
 }

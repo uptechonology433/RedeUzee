@@ -13,10 +13,10 @@ class ProductionDAO extends Connection
         parent::__construct();
     }
 
-    public function getAllProductsInProductionTarja(): array
+    public function getAllProductsInProduction(): array
     {
         $products = $this->pdo
-            ->query("SELECT * from view_verocard_production_tarja;")->fetchAll(\PDO::FETCH_ASSOC);
+            ->query("SELECT * from view_truckpag_production_tarja;")->fetchAll(\PDO::FETCH_ASSOC);
 
         foreach ($products as &$product) {
             $product['dt_processamento'] = date('d/m/Y', strtotime($product['dt_processamento']));
@@ -25,28 +25,4 @@ class ProductionDAO extends Connection
         return $products;
     }
 
-    public function getAllProductsInProductionChip(): array
-    {
-        $products = $this->pdo
-            ->query("SELECT * from view_verocard_production_chip;")->fetchAll(\PDO::FETCH_ASSOC);
-
-        foreach ($products as &$product) {
-            $product['dt_processamento'] = date('d/m/Y', strtotime($product['dt_processamento']));
-        }
-
-        return $products;
-    }
-
-    public function getAllProductsInProductionElo(): array
-    {
-        $products = $this->pdo
-            ->query("SELECT * FROM view_verocard_production_elo WHERE desc_produto = 'VEROCARD+ ELO' AND (dt_expedicao IS NULL OR dt_expedicao = '1970-01-01');")
-            ->fetchAll(\PDO::FETCH_ASSOC);
-
-        foreach ($products as &$product) {
-            $product['dt_processamento'] = date('d/m/Y', strtotime($product['dt_processamento']));
-        }
-
-        return $products;
-    }
 }

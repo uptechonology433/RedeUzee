@@ -16,9 +16,9 @@ final class DispatchedController
         
         $production = [
 
-            $productionDAO -> getAllDispatchedChip(),
+          
             $productionDAO -> getAllDispatchedTarja(),
-            $productionDAO -> getAllDispatchedElo()
+         
 
         ];
 

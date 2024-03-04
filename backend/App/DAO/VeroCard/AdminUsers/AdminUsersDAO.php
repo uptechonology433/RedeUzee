@@ -41,7 +41,7 @@ class AdminUsersDAO extends Connection
     {
 
         $statement = $this->pdo
-            ->prepare("UPDATE usuarios_vero_card SET nome=:nome,  email=:email, senha=:senha, admin=:admin  WHERE id = :id;");
+            ->prepare("UPDATE usuarios_truck_pag SET nome=:nome,  email=:email, senha=:senha, admin=:admin  WHERE id = :id;");
 
         $statement->execute([
             'id' => $usersModel->getId(),
@@ -56,14 +56,14 @@ class AdminUsersDAO extends Connection
     {
 
         $deleteTokenLogs = $this->pdo
-            ->prepare("DELETE from tokens_vero_card WHERE usuarios_id = :idUser;");
+            ->prepare("DELETE from tokens_truck_pag WHERE usuarios_id = :idUser;");
 
         $deleteTokenLogs->execute([
             'idUser' => $idUser
         ]);
 
         $deleteUser = $this->pdo
-            ->prepare("DELETE from usuarios_vero_card WHERE id = :idUser;");
+            ->prepare("DELETE from usuarios_truck_pag WHERE id = :idUser;");
 
         $deleteUser->execute([
             'idUser' => $idUser
@@ -74,7 +74,7 @@ class AdminUsersDAO extends Connection
     {
 
         $statement = $this->pdo
-            ->query("SELECT * FROM usuarios_vero_card WHERE email = '$email';")->fetchAll(\PDO::FETCH_ASSOC);
+            ->query("SELECT * FROM usuarios_truck_pag WHERE email = '$email';")->fetchAll(\PDO::FETCH_ASSOC);
 
         if (count($statement) >= 1) {
             return true;
@@ -87,7 +87,7 @@ class AdminUsersDAO extends Connection
     {
 
         $statement = $this->pdo
-            ->query("SELECT * FROM usuarios_vero_card WHERE email = '$email';")->fetchAll(\PDO::FETCH_ASSOC);
+            ->query("SELECT * FROM usuarios_truck_pag WHERE email = '$email';")->fetchAll(\PDO::FETCH_ASSOC);
 
         return $statement;
     }
