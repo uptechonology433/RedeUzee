@@ -162,13 +162,7 @@ const PageHome: React.FC = () => {
 
         const HomePageRequests = async () => {
 
-            await api.post('/production', { tipo: formValues.Type })
-                .then((data) => {
-                    setInProductionData(data.data)
-                }).catch(() => {
-                    setTypeMessageInProduction(true)
-                });
-
+            
             await api.get('/awaiting-release')
                 .then((data) => {
                     if (formValues.Type === "tarja") {
@@ -182,6 +176,14 @@ const PageHome: React.FC = () => {
                 .catch(() => {
                     setTypeMessageAwaitingRelease(true);
                 });
+
+            await api.post('/production', { tipo: formValues.Type })
+                .then((data) => {
+                    setInProductionData(data.data)
+                }).catch(() => {
+                    setTypeMessageInProduction(true)
+                });
+
 
                 await api.get('/awaiting-shipment')
                 .then((data) => {

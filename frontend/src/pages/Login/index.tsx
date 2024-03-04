@@ -87,8 +87,9 @@ const PageLoguin: React.FC = () => {
                     </div>
 
                     <div className="greetings-up">
-                        <p >UP! Manager</p>
+                        <p>UP! Manager</p>
                     </div>
+                    <div className="teste"></div>
 
                     <div className="image-user-login">
                         <img src="https://firebasestorage.googleapis.com/v0/b/project-vero-card-up.appspot.com/o/Userlogin.svg?alt=media&token=db2d57b8-e4a4-489e-9628-0e1b00d6d15e" alt="Logo cliente" />
