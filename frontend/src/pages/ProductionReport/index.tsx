@@ -34,7 +34,7 @@ const PageProductionReport: React.FC = () => {
 
         FinalShippingDate: "",
 
-        cardType: ""
+        cardType: "Tarja"
 
     });
 
@@ -76,6 +76,10 @@ const PageProductionReport: React.FC = () => {
             selector: (row: any) => row.total_cartoes
         },
         {
+            name: 'Empresa',
+            selector: (row: any) => row.nome_cliente
+        },
+        {
             name: 'Rastreio',
             selector: (row: any) => row.rastreio
         },
@@ -88,7 +92,7 @@ const PageProductionReport: React.FC = () => {
 
     const ProductionReportRequests = async () => {
 
-        if (formValues.cardType === 'Tarja' || formValues.cardType === 'Chip' || formValues.cardType === 'Elo') {
+        if (formValues.cardType === 'Tarja') {
 
             if (formValues.InitialProcessingDate < formValues.FinalProcessingDate
                 || formValues.InitialShippingDate < formValues.FinalShippingDate
@@ -164,13 +168,9 @@ const PageProductionReport: React.FC = () => {
 
                         <Select info={"Selecione o tipo de cartão:"} name="cardType" onChange={handleChange}>
 
-                            <option selected>Selecione um tipo...</option>
-
                             <option value="Tarja">Tarja</option>
 
-                            <option value="Chip">Chip</option>
-
-                            <option value="Elo">Elo</option>
+                       
 
                         </Select>
 
