@@ -18,6 +18,7 @@ final class AwaitingShipmentController
 
          
             $productionDAO -> getAllAwaitingShipmentTarja(),
+ 
 
         ];
 

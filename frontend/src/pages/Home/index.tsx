@@ -75,46 +75,77 @@ const PageHome: React.FC = () => {
 
     const columnsAwaitingShipment: Array<Object> = [
         {
-            name: 'Ordem de produção',
-            selector: (row: any) => row.id_ordem_producao_status,
+            name: 'Codigo do produto',
+            selector: (row: any) => row.cod_produto,
             sortable: true
         },
         {
-            name: 'Id op',
-            selector: (row: any) => row.id_op
+            name: 'Nome do arquivo',
+            selector: (row: any) => row.nome_arquivo_proc
+
+        },
+        {
+            name: 'Desc do Produto',
+            selector: (row: any) => row.desc_produto
 
         },
         {
             name: 'Data de entrada',
-            selector: (row: any) => row.dt_status
+            selector: (row: any) => row.dt_processamento
         },
         {
-            name: 'Data de liberação',
-            selector: (row: any) => row.dt_finalizado
+            name: 'Qtd cartões',
+            selector: (row: any) => row.total_cartoes
+        },
+        {
+            name : 'Empresa',
+            selector: (row: any) => row.empresa
+        },
+        {
+            name : 'Rastreio',
+            selector: (row: any) => row.rastreio
         }
+       
     ];
 
     const columnsDispatched: Array<Object> = [
         {
-            name: 'Ordem de produção',
-            selector: (row: any) => row.id_ordem_producao_status,
+            name: 'Codigo do produto',
+            selector: (row: any) => row.cod_produto,
             sortable: true
         },
         {
-            name: 'Id op',
-            selector: (row: any) => row.id_op
+            name: 'Nome do arquivo',
+            selector: (row: any) => row.nome_arquivo_proc
+
+        },
+        {
+            name: 'Desc do Produto',
+            selector: (row: any) => row.desc_produto
 
         },
         {
             name: 'Data de entrada',
-            selector: (row: any) => row.dt_status
+            selector: (row: any) => row.dt_processamento
         },
         {
-            name: 'Data de liberação',
-            selector: (row: any) => row.dt_finalizado
+            name: 'Data de saida',
+            selector: (row: any) => row.dt_expedicao
+        },
+        {
+            name: 'Qtd cartões',
+            selector: (row: any) => row.total_cartoes
+        },
+        {
+            name : 'Empresa',
+            selector: (row: any) => row.empresa
+        },
+        {
+            name : 'Rastreio',
+            selector: (row: any) => row.rastreio
         }
+       
     ];
-
     useEffect(() => {
 
         const HomePageRequests = async () => {
@@ -144,7 +175,7 @@ const PageHome: React.FC = () => {
                     setTypeMessageAwaitingShipment(true);
                 });
     
-            await api.get('/dispatcheds')
+            await api.get('/dispatched')
                 .then((data) => {
                     console.log("Dados recebidos da rota /dispatcheds:", data.data);
                     setDispatched(data.data);
@@ -179,7 +210,7 @@ const PageHome: React.FC = () => {
             />
 
             <Table
-                data={Array.isArray(awaitingShipmentData) ? awaitingShipmentData : []}
+                data={Array.isArray(awaitingShipmentData) ? awaitingShipmentData[0] : []}
                 column={columnsAwaitingShipment}
                 titleTable="Aguardando Expedição"
                 typeMessage={typeMessageAwaitingShipment}
@@ -187,7 +218,7 @@ const PageHome: React.FC = () => {
 
 
             <Table
-                data={Array.isArray(dispatchedData) ? dispatchedData : []}
+                data={Array.isArray(dispatchedData) ? dispatchedData[0] : []}
                 column={columnsDispatched}
                 titleTable="Expedidos"
                 typeMessage={typeMessageDispatched}
