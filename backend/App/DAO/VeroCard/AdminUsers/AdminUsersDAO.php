@@ -17,7 +17,7 @@ class AdminUsersDAO extends Connection
     {
 
         $statement = $this->pdo
-            ->query("SELECT * from usuarios_vero_card where id != $sub ")
+            ->query("SELECT * from usuarios_truck_pag where id != $sub ")
             ->fetchAll(\PDO::FETCH_ASSOC);
 
         return $statement;
@@ -27,7 +27,7 @@ class AdminUsersDAO extends Connection
     {
 
         $statement = $this->pdo
-            ->prepare("INSERT INTO usuarios_vero_card (nome , email , senha , admin) VALUES (:nome , :email , :senha, :admin);");
+            ->prepare("INSERT INTO usuarios_truck_pag (nome , email , senha , admin) VALUES (:nome , :email , :senha, :admin);");
 
         $statement->execute([
             'nome' => $usersModel->getNome(),
