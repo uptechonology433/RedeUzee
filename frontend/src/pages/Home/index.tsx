@@ -71,6 +71,11 @@ const PageHome: React.FC = () => {
             selector: (row: any) => row.total_cartoes,
             sortable: true
         },
+        {
+            name: 'Etapa',
+            selector: (row: any) => row.status,
+            sortable: true
+        },
     ];
 
     const columnsAwaitingShipment: Array<Object> = [
