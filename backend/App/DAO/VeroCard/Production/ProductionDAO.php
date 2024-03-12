@@ -22,7 +22,7 @@ class ProductionDAO extends Connection
 
          
             switch ($product['status']) {
-                case 1:
+                case 6:
                     $product['status'] = 'cofre';
                     break;
                 case 2:
@@ -30,6 +30,9 @@ class ProductionDAO extends Connection
                     break;
                 case 3:
                     $product['status'] = 'manuseio';
+                    break;
+                default:
+                    $product['status'] = 'desconhecido';
                     break;
             }
         }
