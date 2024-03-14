@@ -23,13 +23,13 @@ class ProductionDAO extends Connection
          
             switch ($product['status']) {
                 case 6:
-                    $product['status'] = 'cofre';
+                    $product['status'] = 'COFRE';
                     break;
                 case 2:
-                    $product['status'] = 'personalização';
+                    $product['status'] = 'PERSO';
                     break;
                 case 3:
-                    $product['status'] = 'manuseio';
+                    $product['status'] = 'MANUSEIO';                
                     break;
                 default:
                     $product['status'] = 'desconhecido';
