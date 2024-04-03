@@ -14,14 +14,14 @@
 
     .container-login {
         width: clamp(52.5rem, 70vw, 67.5rem);
-        height: 704px;
+        height: 90vh;
         background-color: #165259;
         border-radius: 16px;
         display: flex;
 
         .container-style-uptechnology {
             width: clamp(25rem, 35vw, 33.75rem);
-            height: 672px;
+            height: 85vh;
             background-color: $color-faint-gray;
             border-radius: 16px;
             margin: 16px;
@@ -188,16 +188,14 @@
         margin-bottom: 10px;
         left: 0;
         text-align: center;
-        color: $color-white;
+        color: #165259;
         font-weight: $font-bold;
 
     }
 
     @media(max-width: $breakpoint-small),
     (max-height: $breakpoint-medium) {
-        footer {
-            display: none;
-        }
+      
     }
 
 

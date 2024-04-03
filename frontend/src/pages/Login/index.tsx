@@ -2,38 +2,22 @@ import React, { useState, useContext } from "react";
 import Input from "../../components/shared/Input";
 import Button from "../../components/shared/Button";
 import { Context } from '../../AuthContext/AuthContext';
-import { isValidEmail } from "../../utils/Validation";
 import Swal from 'sweetalert2';
 
 const PageLoguin: React.FC = () => {
 
     const { handleLogin }: any = useContext(Context);
 
-    const [emailVerification, setEmailVerification] = useState(true);
-
     const [passwordVerification, setPasswordVerification] = useState(true);
 
-    const [emailUserInput, setEmailUserInput] = useState('');
+    const [usernameInput, setUsernameInput] = useState('');
 
-    const [passwordUserInput, setPasswordUserInput] = useState('');
+    const [passwordInput, setPasswordInput] = useState('');
 
-    const ValidateEmail = () => {
-
-        if (!isValidEmail(emailUserInput)) {
-
-            setEmailVerification(false);
-
-            return false
-        }
-
-        setEmailVerification(true);
-
-        return true;
-    }
-
+    
     const ValidatePassword = () => {
 
-        if (passwordUserInput.length < 6) {
+        if (passwordInput.length < 6) {
 
             setPasswordVerification(false);
 
@@ -47,7 +31,7 @@ const PageLoguin: React.FC = () => {
 
     const isValidationLogin = () => {
 
-        if (!emailUserInput || !passwordUserInput) {
+        if (!passwordInput) {
             Swal.fire({
                 icon: 'error',
                 title: 'Campos vazios...',
@@ -57,7 +41,7 @@ const PageLoguin: React.FC = () => {
             return false;
         }
 
-        if (!ValidateEmail() || !ValidatePassword())
+        if (!ValidatePassword())
             return false;
 
         return true;
@@ -70,7 +54,7 @@ const PageLoguin: React.FC = () => {
             if (!isValidationLogin())
                 return;
 
-            handleLogin(emailUserInput, passwordUserInput);
+            handleLogin(usernameInput, passwordInput);
 
         }
     }
@@ -110,37 +94,24 @@ const PageLoguin: React.FC = () => {
                     </div>
 
                     <h1>Entrar</h1>
-
                     <p>Faça login para iniciar sua sessão</p>
-
                     <div className="container-inputs-login">
-
                         <div className="input-name-user">
-                            <Input placeholder="Email..." onKeyUp={onConfirmButtonPress} info="Email:" value={emailUserInput} onChange={(text: any) => setEmailUserInput(text.target.value)} validate={() => ValidateEmail()} />
-                            <div className="message-error-verification">
-                                {!emailVerification ? <p>O e-mail inserido não é valido.</p> : null}
-                            </div>
-
+                            <Input placeholder="Nome de usuário..." onKeyUp={onConfirmButtonPress} info="Nome de usuário:" value={usernameInput} onChange={(text: any) => setUsernameInput(text.target.value)} />
                         </div>
-
                         <div className="input-password-user">
-
-                            <Input placeholder="Senha..." onKeyUp={onConfirmButtonPress} info="Senha:" icon="visibility" onChange={(text: any) => setPasswordUserInput(text.target.value)} validate={() => ValidatePassword()} />
-
+                            <Input placeholder="Senha..." onKeyUp={onConfirmButtonPress} info="Senha:" icon="visibility" onChange={(text: any) => setPasswordInput(text.target.value)} />
                             <div className="message-error-verification">
-
-                                {!passwordVerification ? <p>A senha deve conter mais de 5 digitos</p> : null}
-
+                                {!passwordVerification ? <p>A senha deve conter mais de 5 dígitos</p> : null}
                             </div>
-
                         </div>
-
                         <Button text="Entrar" onClick={onConfirmButtonPress} />
 
                     </div>
                 </div>
+                <footer><p>Copyright 2023 © | Up Technology by Rebeca Lopes</p></footer>
             </div>
-            <footer><p>Copyright 2023 © | Up Technology by Rebeca Lopes</p></footer>
+           
 
         </div>
     )
