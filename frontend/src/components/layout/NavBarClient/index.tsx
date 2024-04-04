@@ -18,7 +18,7 @@ const NavBarClient: React.FC = () => {
         <header>
             <nav>
                 <div className="image-logo-client-white">
-                    <img src='https://www.truckpag.com.br/img/LOGOTIPO-GRUPO-FOOTER-TRUCKPAG.svg' alt="Logo up" />
+                <a href="https://www.truckpag.com.br/"> <img src='https://ngn.vulcanet.com.br/wp-content/uploads/2016/11/rede-de-supermecados-da-pague-menos.png' alt="Logo up" /></a>
                 </div>
                 <Icon name='menu' onClick={showSidebar} />
                 <ul className="nav-list">
