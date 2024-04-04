@@ -85,7 +85,7 @@ const PageLoguin: React.FC = () => {
 
                     <div className="container-logos">
                         <div className="image-logo-client-red">
-                            <img src='https://www.truckpag.com.br/img/LOGOTIPO-GRUPO-FOOTER-TRUCKPAG.svg' alt="Logo up" />
+                        <a href="https://www.truckpag.com.br/"><img src='https://www.truckpag.com.br/img/LOGOTIPO-GRUPO-FOOTER-TRUCKPAG.svg' alt="Logo up" /></a>
 
                         </div>
                         <div className="image-logo-up">
