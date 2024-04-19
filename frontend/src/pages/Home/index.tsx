@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import api from "../../connectionAPI";
 import Table from "../../components/shared/Table";
 import DefaultHeader from "../../components/layout/DefaultHeader";
+import DownloadFacilitators from "../../components/layout/DownloadFacilitators";
+import { useDownloadExcel } from "react-export-table-to-excel";
 
 
 const PageHome: React.FC = () => {
@@ -16,86 +18,97 @@ const PageHome: React.FC = () => {
     const [typeMessageDispatched, setTypeMessageDispatched] = useState(false);
 
 
- 
 
     const columnsAwaitingRelease: Array<Object> = [
         {
-            name: 'Codigo do produto',
-            selector: (row: any) => row.cod_produto,
-            sortable: true
-        },
-        {
-            name: 'Nome do arquivo',
+            name: 'Nome Arquivo',
             selector: (row: any) => row.nome_arquivo_proc
 
         },
         {
-            name: 'Desc do Produto',
+            name: 'Cod Produto',
+            selector: (row: any) => row.cod_produto,
+            sortable: true
+        },
+
+        {
+            name: 'Desc Produto',
             selector: (row: any) => row.desc_produto
 
         },
         {
-            name: 'Data de entrada',
+            name: 'Data Entrada',
             selector: (row: any) => row.dt_processamento
         },
         {
-            name: 'Qtd cartões',
+            name: 'Qtd Cartões',
             selector: (row: any) => row.total_cartoes
         }
     ];
 
     const columnsInProduction: Array<Object> = [
         {
-            name: 'Codigo do produto',
-            selector: (row: any) => row.cod_produto,
-            sortable: true
-        },
-        {
-            name: 'Nome do arquivo',
+            name: 'Nome Arquivo',
             selector: (row: any) => row.nome_arquivo_proc,
 
         },
         {
-            name: 'Desc do Produto',
+            name: 'Cod Produto',
+            selector: (row: any) => row.cod_produto,
+            sortable: true
+        },
+
+        {
+            name: 'Desc Produto',
             selector: (row: any) => row.desc_produto,
 
 
         },
         {
-            name: 'Data Pros',
+            name: 'Data Entrada',
             selector: (row: any) => row.dt_processamento
 
         },
         {
-            name: 'Quantidade de cartões',
+            name: 'Qtd Cartões',
             selector: (row: any) => row.total_cartoes,
             sortable: true
+        },
+        {
+            name: 'Empresa',
+            selector: (row: any) => row.empresa
+        },
+        {
+            name: 'Rastreio',
+            selector: (row: any) => row.rastreio
         },
         {
             name: 'Etapa',
             selector: (row: any) => row.status,
             sortable: true
         },
+
     ];
 
     const columnsAwaitingShipment: Array<Object> = [
         {
-            name: 'Codigo do produto',
-            selector: (row: any) => row.cod_produto,
-            sortable: true
-        },
-        {
-            name: 'Nome do arquivo',
+            name: 'Nome Arquivo',
             selector: (row: any) => row.nome_arquivo_proc
 
         },
         {
-            name: 'Desc do Produto',
+            name: 'Cod Produto',
+            selector: (row: any) => row.cod_produto,
+            sortable: true
+        },
+
+        {
+            name: 'Desc Produto',
             selector: (row: any) => row.desc_produto
 
         },
         {
-            name: 'Data de entrada',
+            name: 'Data Entrada',
             selector: (row: any) => row.dt_processamento
         },
         {
@@ -103,53 +116,54 @@ const PageHome: React.FC = () => {
             selector: (row: any) => row.total_cartoes
         },
         {
-            name : 'Empresa',
+            name: 'Empresa',
             selector: (row: any) => row.empresa
         },
         {
-            name : 'Rastreio',
+            name: 'Rastreio',
             selector: (row: any) => row.rastreio
         }
-       
+
     ];
 
     const columnsDispatched: Array<Object> = [
         {
-            name: 'Codigo do produto',
-            selector: (row: any) => row.cod_produto,
-            sortable: true
-        },
-        {
-            name: 'Nome do arquivo',
+            name: 'Nome Arquivo',
             selector: (row: any) => row.nome_arquivo_proc
 
         },
         {
-            name: 'Desc do Produto',
+            name: 'Cod Produto',
+            selector: (row: any) => row.cod_produto,
+            sortable: true
+        },
+    
+        {
+            name: 'Desc Produto',
             selector: (row: any) => row.desc_produto
 
         },
         {
-            name: 'Data de entrada',
+            name: 'Data Entrada',
             selector: (row: any) => row.dt_processamento
         },
         {
-            name: 'Data de saida',
+            name: 'Data Saida',
             selector: (row: any) => row.dt_expedicao
         },
         {
-            name: 'Qtd cartões',
+            name: 'Qtd Cartões',
             selector: (row: any) => row.total_cartoes
         },
         {
-            name : 'Empresa',
+            name: 'Empresa',
             selector: (row: any) => row.empresa
         },
         {
-            name : 'Rastreio',
+            name: 'Rastreio',
             selector: (row: any) => row.rastreio
         }
-       
+
     ];
     useEffect(() => {
 
@@ -161,16 +175,16 @@ const PageHome: React.FC = () => {
                 }).catch(() => {
                     setTypeMessageAwaitingRelease(true);
                 });
-    
-                await api.post('/production')
+
+            await api.post('/production')
                 .then((data) => {
                     console.log('teste')
                     setInProductionData(data.data)
-                   
+
                 }).catch(() => {
                     setTypeMessageInProduction(true)
                 });
-    
+
             await api.get('/awaiting-shipment')
                 .then((data) => {
                     console.log("Dados recebidos da rota /awaiting-shipment:", data.data);
@@ -179,55 +193,247 @@ const PageHome: React.FC = () => {
                     console.error("Erro ao obter dados da rota /awaiting-shipment:", error);
                     setTypeMessageAwaitingShipment(true);
                 });
-    
+
             await api.get('/dispatched')
                 .then((data) => {
                     console.log("Dados recebidos da rota /dispatcheds:", data.data);
                     setDispatched(data.data);
                 }).catch((error) => {
-                    console.error("Erro ao obter dados da rota /dispatcheds:", error);
+                    console.error("Erro ao obter dados da rota /dispatchedssssssssssss:", error);
                     setTypeMessageDispatched(true);
                 });
         }
-    
+
         HomePageRequests();
-    
+
     }, []);
-    
+
+
+    const refExcel: any = useRef();
+
+    const { onDownload } = useDownloadExcel({
+        currentTableRef: refExcel.current,
+        filename: "Rejeitos",
+        sheet: "Rejeitos"
+    })
+
 
     return (
         <div className="container-page-home">
 
             <DefaultHeader />
 
-            <Table
-                data={Array.isArray(awaitingReleaseData) ? awaitingReleaseData[0] : []}
-                column={columnsAwaitingRelease}
-                titleTable="Aguardando liberação"
-                typeMessage={typeMessageAwaitingRelease}
-            />
-
-            <Table
-                data={Array.isArray(inProductionData) ? inProductionData: []}
-                column={columnsInProduction}
-                titleTable="Em produção"
-                typeMessage={typeMessageInProduction}
-            />
-
-            <Table
-                data={Array.isArray(awaitingShipmentData) ? awaitingShipmentData[0] : []}
-                column={columnsAwaitingShipment}
-                titleTable="Aguardando Expedição"
-                typeMessage={typeMessageAwaitingShipment}
-            />
+            <div>
+                <Table
+                    data={Array.isArray(awaitingReleaseData) ? awaitingReleaseData[0] : []}
+                    column={columnsAwaitingRelease}
+                    titleTable="Aguardando liberação"
+                    typeMessage={typeMessageAwaitingRelease}
 
 
-            <Table
-                data={Array.isArray(dispatchedData) ? dispatchedData[0] : []}
-                column={columnsDispatched}
-                titleTable="Expedidos"
-                typeMessage={typeMessageDispatched}
-            />
+                />
+                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} />
+
+            </div>
+
+
+            <div>
+                <Table
+                    data={Array.isArray(inProductionData) ? inProductionData : [0]}
+                    column={columnsInProduction}
+                    titleTable="Em produção"
+                    typeMessage={typeMessageInProduction}
+                />
+
+                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} />
+            </div>
+            <div>
+                <Table
+                    data={Array.isArray(awaitingShipmentData) ? awaitingShipmentData[0] : []}
+                    column={columnsAwaitingShipment}
+                    titleTable="Aguardando Expedição"
+                    typeMessage={typeMessageAwaitingShipment}
+                />
+                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} />
+            </div>
+
+            <div>
+                <Table
+                    data={Array.isArray(dispatchedData) ? dispatchedData[0] : []}
+                    column={columnsDispatched}
+                    titleTable="Expedidos"
+                    typeMessage={typeMessageDispatched}
+                    refExcel={refExcel}
+                />
+                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} />
+            </div>
+
+            <div className="table-container-dowload">
+
+                <div className="scroll-table-dowload">
+                    <table ref={refExcel}>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Nome Arquivo</td>
+                                <td>Cod Produto</td>
+                                <td>Desc Produto</td>
+                                <td>Data Entrada</td>
+                                <td>Qtd Cartões</td>
+                                <td>Qtd</td>
+                            </tr>
+
+
+                            {
+                                awaitingReleaseData.map((data: any) =>
+                                    <tr key={data.id}>
+                                        <td>{data.nome_arquivo_proc}</td>
+                                        <td>{data.cod_produto}</td>
+                                        <td>{data.desc_produto}</td>
+                                        <td>{data.dt_processamento}</td>
+                                        <td>{data.total_cartoes}</td>
+
+                                    </tr>
+                                )
+                            }
+
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div className="scroll-table-dowload">
+                    <table ref={refExcel}>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Nome Arquivo</td>
+                                <td>Cod Produto</td>
+                                <td>Desc Produto</td>
+                                <td>Data Entrada</td>
+                                <td>Qtd Cartões</td>
+                                <td>Empresa</td>
+                                <td>Rastreio</td>
+                                <td>Etapa</td>
+                            </tr>
+
+
+                            {
+                                inProductionData.map((data: any) =>
+                                    <tr key={data.id}>
+                                        <td>{data.nome_arquivo_proc}</td>
+                                        <td>{data.cod_produto}</td>
+                                        <td>{data.desc_produto}</td>
+                                        <td>{data.dt_processamento}</td>
+                                        <td>{data.total_cartoes}</td>
+                                        <td>{data.empresa}</td>
+                                        <td>{data.rastreio}</td>
+                                        <td>{data.status}</td>
+
+                                    </tr>
+                                )
+                            }
+
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div className="scroll-table-dowload">
+                    <table ref={refExcel}>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Nome Arquivo</td>
+                                <td>Cod Produto</td>
+                                <td>Desc Produto</td>
+                                <td>Data Entrada</td>
+                                <td>Qtd Cartões</td>
+                                <td>Empresa</td>
+                                <td>Rastreio</td>
+                            
+                            </tr>
+
+
+                            {
+                               awaitingShipmentData.map((data: any) =>
+                                    <tr key={data.id}>
+                                        <td>{data.nome_arquivo_proc}</td>
+                                        <td>{data.cod_produto}</td>
+                                        <td>{data.desc_produto}</td>
+                                        <td>{data.dt_processamento}</td>
+                                        <td>{data.total_cartoes}</td>
+                                        <td>{data.empresa}</td>
+                                        <td>{data.rastreio}</td>
+                                       
+
+                                    </tr>
+                                )
+                            }
+
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div className="scroll-table-dowload">
+                    <table ref={refExcel}>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Nome Arquivo</td>
+                                <td>Cod Produto</td>
+                                <td>Desc Produto</td>
+                                <td>Data Entrada</td>
+                                <td>Data Saida</td>
+                                <td>Qtd Cartões</td>
+                                <td>Empresa</td>
+                                <td>Rastreio</td>
+                            
+                            </tr>
+
+
+                            {
+                               dispatchedData.map((data: any) =>
+                                    <tr key={data.id}>
+                                        <td>{data.nome_arquivo_proc}</td>
+                                        <td>{data.cod_produto}</td>
+                                        <td>{data.desc_produto}</td>
+                                        <td>{data.dt_processamento}</td>
+                                        <td>{data.dt_expedicao}</td>
+                                        <td>{data.total_cartoes}</td>
+                                        <td>{data.empresa}</td>
+                                        <td>{data.rastreio}</td>
+                                       
+
+                                    </tr>
+                                )
+                            }
+
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+               
+
+            </div>
         </div >
     )
 }
