@@ -208,14 +208,37 @@ const PageHome: React.FC = () => {
 
     }, []);
 
+    
+    const refExcel1: any = useRef();
+    const { onDownload: onDownload1 } = useDownloadExcel({
+        currentTableRef: refExcel1.current,
+        filename: "Aguardando Liberação",
+        sheet: "Aguardando Liberação"
+    });
+    
+    const refExcel2: any = useRef();
+    const { onDownload: onDownload2 } = useDownloadExcel({
+        currentTableRef: refExcel2.current,
+        filename: "Em Produção",
+        sheet: "Em Produção"
+    });
+    
+    const refExcel3: any = useRef();
+    const { onDownload: onDownload3 } = useDownloadExcel({
+        currentTableRef: refExcel3.current,
+        filename: "Aguardando Expedição",
+        sheet: "Aguardando Expedição"
+    });
+    
+    const refExcel4: any = useRef();
+    const { onDownload: onDownload4 } = useDownloadExcel({
+        currentTableRef: refExcel4.current,
+        filename: "Expedidos",
+        sheet: "Expedidos"
+    });
+    
 
-    const refExcel: any = useRef();
 
-    const { onDownload } = useDownloadExcel({
-        currentTableRef: refExcel.current,
-        filename: "Rejeitos",
-        sheet: "Rejeitos"
-    })
 
 
     return (
@@ -232,7 +255,7 @@ const PageHome: React.FC = () => {
 
 
                 />
-                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} />
+                <DownloadFacilitators excelClick={() => onDownload1()} printClick={() => window.print()} />
 
             </div>
 
@@ -245,7 +268,7 @@ const PageHome: React.FC = () => {
                     typeMessage={typeMessageInProduction}
                 />
 
-                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} />
+                <DownloadFacilitators excelClick={() => onDownload2()} printClick={() => window.print()} />
             </div>
             <div>
                 <Table
@@ -254,7 +277,7 @@ const PageHome: React.FC = () => {
                     titleTable="Aguardando Expedição"
                     typeMessage={typeMessageAwaitingShipment}
                 />
-                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} />
+                <DownloadFacilitators excelClick={() => onDownload3()} printClick={() => window.print()} />
             </div>
 
             <div>
@@ -263,15 +286,15 @@ const PageHome: React.FC = () => {
                     column={columnsDispatched}
                     titleTable="Expedidos"
                     typeMessage={typeMessageDispatched}
-                    refExcel={refExcel}
+                   
                 />
-                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} />
+                <DownloadFacilitators excelClick={() => onDownload4()} printClick={() => window.print()} />
             </div>
 
             <div className="table-container-dowload">
 
                 <div className="scroll-table-dowload">
-                    <table ref={refExcel}>
+                    <table ref={refExcel1}>
 
                         <tbody>
 
@@ -307,7 +330,7 @@ const PageHome: React.FC = () => {
                 </div>
 
                 <div className="scroll-table-dowload">
-                    <table ref={refExcel}>
+                    <table ref={refExcel2}>
 
                         <tbody>
 
@@ -348,7 +371,7 @@ const PageHome: React.FC = () => {
                 </div>
 
                 <div className="scroll-table-dowload">
-                    <table ref={refExcel}>
+                    <table ref={refExcel3}>
 
                         <tbody>
 
@@ -389,7 +412,7 @@ const PageHome: React.FC = () => {
                 </div>
 
                 <div className="scroll-table-dowload">
-                    <table ref={refExcel}>
+                    <table ref={refExcel4}>
 
                         <tbody>
 
