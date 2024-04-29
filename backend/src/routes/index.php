@@ -7,6 +7,7 @@ use App\Controllers\Auth\AuthController;
 use App\Controllers\Production\ProductionController;
 use App\Controllers\AwaitingRelease\AwaitingReleaseController;
 use App\Controllers\AwaitingShipment\AwaitingShipmentController;
+use App\Controllers\CardsIssuedReport\CardsIssuedReportController;
 use App\Controllers\Dispatched\DispatchedController;
 use App\Controllers\ProductionReport\ProductionReportController;
 use App\Controllers\Stock\StockController;
@@ -81,6 +82,10 @@ $app -> get('/dispatched' , DispatchedController::class . ':Dispatched')
 $app -> post('/production-report' , ProductionReportController::class . ':ProductionReport')
 -> add(new jwtDateTime())
 -> add(jwtAuth());
+
+$app->post('/cardsissued-report', CardsIssuedReportController::class . ':CardsIssuedReport')
+    ->add(new jwtDateTime())
+    ->add(jwtAuth());
 
 // ==================================================
 

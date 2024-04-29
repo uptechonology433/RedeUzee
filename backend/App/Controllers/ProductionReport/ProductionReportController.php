@@ -52,29 +52,29 @@ final class ProductionReportController
             ->setFinalShippingdate(trim($data['expedicaoFinal']));
 
 
-        if (!empty(trim($data['tipo'])) &&  $data['tipo']  === 'Tarja') {
+        if (!empty(trim($data['tipo'])) &&  $data['tipo']  === 'RedeUze') {
 
             if (!empty(trim($data['arquivo']))) {
 
-                $productionReport = $productionReportDAO->getProductionReportFilterFileTarjaDAO($productionReportModel);
+                $productionReport = $productionReportDAO->getProductionReportFilterFileDAO($productionReportModel);
             } else if (
                 !empty(trim($data['dataInicial'])) && !empty(trim($data['dataFinal']))
                 && empty(trim($data['expedicaoInicial'])) && empty(trim($data['expedicaoFinal']))
             ) {
 
-                $productionReport = $productionReportDAO->getProductionReportFilterDateTarjaDAO($productionReportModel);
+                $productionReport = $productionReportDAO->getProductionReportFilterDateDAO($productionReportModel);
             } else if (
                 !empty(trim($data['expedicaoInicial'])) && !empty(trim($data['expedicaoFinal']))
                 && empty(trim($data['dataInicial'])) && empty(trim($data['dataFinal']))
             ) {
 
-                $productionReport = $productionReportDAO->getProductionReportFilterShippingTarjaDAO($productionReportModel);
+                $productionReport = $productionReportDAO->getProductionReportFilterShippingDAO($productionReportModel);
             } else if (
                 !empty(trim($data['expedicaoInicial'])) && !empty(trim($data['expedicaoFinal']))
                 && !empty(trim($data['dataInicial'])) && !empty(trim($data['dataFinal']))
             ) {
 
-                $productionReport = $productionReportDAO->getProductionReportFilterDatesInGeneralTarjaDAO($productionReportModel);
+                $productionReport = $productionReportDAO->getProductionReportFilterDatesInGeneralDAO($productionReportModel);
             } else {
 
                 $productionReport = "Preencha os campos corretamente!";

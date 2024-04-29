@@ -14,10 +14,10 @@ class DispatchedDAO extends Connection{
   
 
     
-    public function getAllDispatchedTarja() : array {
+    public function getAllDispatched() : array {
 
         $productsDispatched  = $this -> pdo
-            ->query("SELECT  * FROM view_truckpag_dispatched_tarja;")
+            ->query("SELECT  * FROM view_redeuze_dispatched;")
             ->fetchAll(\PDO::FETCH_ASSOC);
 
             foreach ($productsDispatched as &$product) {

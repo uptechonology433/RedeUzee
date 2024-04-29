@@ -13,17 +13,15 @@ class ProductionReportDAO extends Connection
         parent::__construct();
     }
 
-    public function getProductionReportFilterFileTarjaDAO(ProductionReportModel $productionReportModel): array
+    public function getProductionReportFilterFileDAO(ProductionReportModel $productionReportModel): array
     {
 
-        $statement = $this->pdo->prepare("SELECT cod_produto, 
-        desc_produto ,
+        $statement = $this->pdo->prepare("SELECT
          to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
-         rastreio, 
-         nome_cliente,
-        total_cartoes, status from view_truckpag_producao_tarja WHERE nome_arquivo_proc = :arquivo");
+      
+        total_cartoes, status from view_redeuze_producao WHERE nome_arquivo_proc = :arquivo");
 
         $statement->execute(['arquivo' => $productionReportModel->getFile()]);
 
@@ -32,17 +30,16 @@ class ProductionReportDAO extends Connection
         return $response;
     }
 
-    public function getProductionReportFilterDateTarjaDAO(ProductionReportModel $productionReportModel): array
+    public function getProductionReportFilterDateDAO(ProductionReportModel $productionReportModel): array
     {
 
-        $statement = $this->pdo->prepare("SELECT cod_produto, 
-        desc_produto ,
+        $statement = $this->pdo->prepare("SELECT 
+      
          to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
-         rastreio, 
-         nome_cliente,
-        total_cartoes, status from view_truckpag_producao_tarja where dt_processamento BETWEEN :datainicial AND :datafinal ;");
+      
+        total_cartoes, status from view_redeuze_producao where dt_processamento BETWEEN :datainicial AND :datafinal ;");
 
         $statement->execute(['datainicial' => $productionReportModel->getInitialProcessinDate(), 'datafinal' => $productionReportModel->getFinalProcessinDate()]);
 
@@ -51,16 +48,14 @@ class ProductionReportDAO extends Connection
         return $response;
     }
 
-    public function getProductionReportFilterShippingTarjaDAO(ProductionReportModel $productionReportModel): array
+    public function getProductionReportFilterShippingDAO(ProductionReportModel $productionReportModel): array
     {
-        $statement = $this->pdo->prepare("SELECT cod_produto, 
-        desc_produto ,
+        $statement = $this->pdo->prepare("SELECT
+     
          to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
-         rastreio, 
-         nome_cliente,
-        total_cartoes, status from view_truckpag_producao_tarja where dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal ;");
+        total_cartoes, status from view_redeuze_producao where dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal ;");
 
         $statement->execute(['expedicaoinicial' => $productionReportModel->getInitialShippingdate(), 'expedicaofinal' => $productionReportModel->getFinalShippingdate()]);
 
@@ -70,17 +65,15 @@ class ProductionReportDAO extends Connection
     }
 
 
-    public function getProductionReportFilterDatesInGeneralTarjaDAO(ProductionReportModel $productionReportModel): array
+    public function getProductionReportFilterDatesInGeneralDAO(ProductionReportModel $productionReportModel): array
     {
 
-        $statement = $this->pdo->prepare("SELECT cod_produto, 
+        $statement = $this->pdo->prepare("SELECT 
        
          to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
-         rastreio, 
-         nome_cliente,
-        total_cartoes, status from view_truckpag_producao_tarja WHERE nome_arquivo_proc = :arquivo");
+        total_cartoes, status from view_redeuze_producao WHERE nome_arquivo_proc = :arquivo");
 
         $statement->execute(['arquivo' => $productionReportModel->getFile()]);
 

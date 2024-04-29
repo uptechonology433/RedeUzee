@@ -26,6 +26,10 @@ const PrivateRouter: React.FC = () => {
                         < Route path={`${process.env.PUBLIC_URL}/home`} element={< PageHome />} />
                         < Route path={`${process.env.PUBLIC_URL}/relatorio-producao`} element={< PageProductionReport />} />
                         < Route path={`${process.env.PUBLIC_URL}/estoque`} element={< PageStock />} />
+                        < Route path={`${process.env.PUBLIC_URL}/cartoes-emitidos`} element={< PageCardsIssued />} />
+                        {/* < Route path={`${process.env.PUBLIC_URL}/rejeitos`} element={< PageWaste />} />
+                        < Route path={`${process.env.PUBLIC_URL}/inativos`} element={< PageInactive />} />
+                        < Route path={`${process.env.PUBLIC_URL}/rupturas`} element={< PageRuptures />} /> */}
                         
                         {authenticatedAdmin ?
                             <>
