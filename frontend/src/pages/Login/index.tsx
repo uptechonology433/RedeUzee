@@ -85,7 +85,7 @@ const PageLoguin: React.FC = () => {
 
                     <div className="container-logos">
                         <div className="image-logo-client-red">
-                        <a href="https://www.truckpag.com.br/"><img src='https://www.truckpag.com.br/img/LOGOTIPO-GRUPO-FOOTER-TRUCKPAG.svg' alt="Logo up" /></a>
+                        <a href="https://www.truckpag.com.br/"><img src='https://uzecomvoce.com.br/wp-content/uploads/2021/12/logo-uze-1.jpg' alt="Logo up" /></a>
 
                         </div>
                         <div className="image-logo-up">
@@ -109,7 +109,6 @@ const PageLoguin: React.FC = () => {
 
                     </div>
                 </div>
-                <footer><p>Copyright 2023 © | Up Technology by Rebeca Lopes</p></footer>
             </div>
            
 

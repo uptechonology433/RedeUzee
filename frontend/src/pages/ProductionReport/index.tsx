@@ -34,7 +34,7 @@ const PageProductionReport: React.FC = () => {
 
         FinalShippingDate: "",
 
-        cardType: "Tarja"
+        cardType: "RedeUze"
 
     });
 
@@ -47,13 +47,8 @@ const PageProductionReport: React.FC = () => {
 
     const columnsProductionReport: Array<Object> = [
         {
-            name: 'Código do produto',
-            selector: (row: any) => row.cod_produto,
-            sortable: true
-        },
-        {
-            name: 'Descrição do produto',
-            selector: (row: any) => row.desc_produto
+            name: 'Nome do arquivo',
+            selector: (row: any) => row.nome_arquivo_proc
         },
         {
             name: 'Data de processamento',
@@ -63,10 +58,7 @@ const PageProductionReport: React.FC = () => {
             name: 'Data de expedição',
             selector: (row: any) => row.dt_expedicao
         },
-        {
-            name: 'Nome do arquivo',
-            selector: (row: any) => row.nome_arquivo_proc
-        },
+
         {
             name: 'Status',
             selector: (row: any) => row.dt_expedicao ? 'Expedido' : row.status
@@ -74,25 +66,17 @@ const PageProductionReport: React.FC = () => {
         {
             name: 'Qtd cartões',
             selector: (row: any) => row.total_cartoes
-        },
-        {
-            name: 'Empresa',
-            selector: (row: any) => row.nome_cliente
-        },
-        {
-            name: 'Rastreio',
-            selector: (row: any) => row.rastreio
-        },
+        }
 
-       
-       
+
+
     ];
 
 
 
     const ProductionReportRequests = async () => {
 
-        if (formValues.cardType === 'Tarja') {
+        if (formValues.cardType === 'RedeUze') {
 
             if (formValues.InitialProcessingDate < formValues.FinalProcessingDate
                 || formValues.InitialShippingDate < formValues.FinalShippingDate
@@ -168,9 +152,9 @@ const PageProductionReport: React.FC = () => {
 
                         <Select info={"Selecione o tipo de cartão:"} name="cardType" onChange={handleChange}>
 
-                            <option value="Tarja">Tarja</option>
+                            <option value="RedeUze">Rede Uze</option>
 
-                       
+
 
                         </Select>
 

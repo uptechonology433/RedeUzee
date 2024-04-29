@@ -9,7 +9,7 @@
   } 
 
 header {
-    background-color: #165259;
+    background-color: #3F286C;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,7 +24,7 @@ header {
         margin-left: clamp(1rem, 5vw, 4.375rem);
 
         img{
-            width: clamp( 8rem , 13vw , 9rem);
+            width: clamp( 4rem , 7vw , 4rem);
         }
     }
 

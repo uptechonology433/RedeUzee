@@ -25,17 +25,7 @@ const PageHome: React.FC = () => {
             selector: (row: any) => row.nome_arquivo_proc
 
         },
-        {
-            name: 'Cod Produto',
-            selector: (row: any) => row.cod_produto,
-            sortable: true
-        },
-
-        {
-            name: 'Desc Produto',
-            selector: (row: any) => row.desc_produto
-
-        },
+  
         {
             name: 'Data Entrada',
             selector: (row: any) => row.dt_processamento
@@ -52,18 +42,8 @@ const PageHome: React.FC = () => {
             selector: (row: any) => row.nome_arquivo_proc,
 
         },
-        {
-            name: 'Cod Produto',
-            selector: (row: any) => row.cod_produto,
-            sortable: true
-        },
-
-        {
-            name: 'Desc Produto',
-            selector: (row: any) => row.desc_produto,
-
-
-        },
+ 
+     
         {
             name: 'Data Entrada',
             selector: (row: any) => row.dt_processamento
@@ -74,14 +54,7 @@ const PageHome: React.FC = () => {
             selector: (row: any) => row.total_cartoes,
             sortable: true
         },
-        {
-            name: 'Empresa',
-            selector: (row: any) => row.empresa
-        },
-        {
-            name: 'Rastreio',
-            selector: (row: any) => row.rastreio
-        },
+
         {
             name: 'Etapa',
             selector: (row: any) => row.status,
@@ -96,17 +69,7 @@ const PageHome: React.FC = () => {
             selector: (row: any) => row.nome_arquivo_proc
 
         },
-        {
-            name: 'Cod Produto',
-            selector: (row: any) => row.cod_produto,
-            sortable: true
-        },
-
-        {
-            name: 'Desc Produto',
-            selector: (row: any) => row.desc_produto
-
-        },
+    
         {
             name: 'Data Entrada',
             selector: (row: any) => row.dt_processamento
@@ -115,10 +78,7 @@ const PageHome: React.FC = () => {
             name: 'Qtd cartões',
             selector: (row: any) => row.total_cartoes
         },
-        {
-            name: 'Empresa',
-            selector: (row: any) => row.empresa
-        },
+    
         {
             name: 'Rastreio',
             selector: (row: any) => row.rastreio
@@ -132,17 +92,7 @@ const PageHome: React.FC = () => {
             selector: (row: any) => row.nome_arquivo_proc
 
         },
-        {
-            name: 'Cod Produto',
-            selector: (row: any) => row.cod_produto,
-            sortable: true
-        },
-    
-        {
-            name: 'Desc Produto',
-            selector: (row: any) => row.desc_produto
-
-        },
+     
         {
             name: 'Data Entrada',
             selector: (row: any) => row.dt_processamento
@@ -154,14 +104,6 @@ const PageHome: React.FC = () => {
         {
             name: 'Qtd Cartões',
             selector: (row: any) => row.total_cartoes
-        },
-        {
-            name: 'Empresa',
-            selector: (row: any) => row.empresa
-        },
-        {
-            name: 'Rastreio',
-            selector: (row: any) => row.rastreio
         }
 
     ];
