@@ -84,7 +84,7 @@ const PageWaste: React.FC = () => {
         <>
 
             <DefaultHeader sessionTheme="Rejeitos" />
-            <div className="container-weste">
+            <div className="container-waste">
                 <div className="inputs-info-products">
                     <Input
                         name="searchTerm"
@@ -95,9 +95,9 @@ const PageWaste: React.FC = () => {
 
                     />
 
-
+                    <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} textButton={'Pesquisar'} onClickButton={handleSearch} />
                 </div>
-                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} textButton={'Pesquisar'} onClickButton={handleSearch} />
+
 
                 <Table
                     data={wasteData}
