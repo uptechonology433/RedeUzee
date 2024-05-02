@@ -1,15 +1,14 @@
-
 @keyframes go-back {
     from {
-      transform: translateX(100px);
+        transform: translateX(100px);
     }
     to {
-      transform: translateX(0);
+        transform: translateX(0);
     }
-  } 
+}
 
 header {
-    background-color: #3F286C;
+    background-color: $color-client;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,10 +22,12 @@ header {
     .image-logo-client-white {
         margin-left: clamp(1rem, 5vw, 4.375rem);
 
-        img{
-            width: clamp( 4rem , 7vw , 4rem);
+        img {
+            height: 50px;
+            width: clamp(2rem, 4vw, 9rem);
         }
     }
+    
 
     li:hover {
         cursor: pointer;
@@ -35,6 +36,7 @@ header {
         transform: scale(1.1);
         margin-top: -3px;
     }
+ 
 
     nav {
         width: 100%;
@@ -45,14 +47,14 @@ header {
         justify-content: space-between;
 
         .icon {
-            color: $color-white;
+            color: $color-black;
             font-size: 35px;
             cursor: pointer;
             display: none;
         }
 
-        .container-logout-icon{
-            .icon{
+        .container-logout-icon {
+            .icon {
                 display: block;
                 font-size: 25px;
             }
@@ -63,26 +65,72 @@ header {
             list-style: none;
             justify-content: end;
 
-
-            li {
+            .li-principal {
                 margin-left: clamp(1rem, 4vw, 4rem);
                 font-weight: $font-semibold;
                 cursor: pointer;
-                font-size: clamp( 1rem , 1.2vw , 1.125rem);
-                
+                font-size: clamp(1rem, 1.2vw, 1.125rem);
 
-                a {
+                a, span {
                     text-decoration: none;
                     color: $color-white;
                 }
-            } 
+            }
+
+            .dropdown {
+                position: relative;
+                display: inline-block;
+                
+
+                .submenu {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                
+                    background-color: #f9f9f9;
+                    min-width: 160px;
+                    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                    z-index: 1;
+                
+                    /* Modificação para orientação vertical */
+                    ul {
+                        display: flex;
+                        flex-direction: column; /* Alteração principal para orientação vertical */
+                        padding: 0; /* Removendo o padding padrão */
+                        margin: 0; 
+                    }
+                
+                    li {
+                        text-align: center;
+                       
+                        border-bottom: 1px solid #ddd;
+                
+                        &:last-child {
+                            border-bottom: none;
+                        }
+                
+                        &:hover {
+                            background-color: lighten(#f9f9f9, 10%);
+                        }
+
+                        .select{
+                            font-size: 14px;
+                            color: rgb(57, 57, 57);
+                        }
+                    }
+                }
+
+                &:hover {
+                    .submenu {
+                        display: block;
+                    }
+                }
+            }
         }
     }
 
-    @media(max-width: $breakpoint-laptop ) {
-
+    @media (max-width: $breakpoint-laptop) {
         nav {
-
             .icon {
                 display: block;
             }
@@ -103,7 +151,7 @@ header {
         flex-direction: column;
         font-weight: $font-semibold;
         animation: go-back 1s;
-        
+
         .container-icon-close {
             width: 100%;
             padding: 16px;
@@ -111,17 +159,15 @@ header {
             justify-content: right;
 
             .icon {
-                color: $color-white;
+                color: $color-black;
                 font-size: 35px;
                 cursor: pointer;
-
             }
-
         }
 
-        .nav-list{
-            .icon{
-                color: $color-white;
+        .nav-list {
+            .icon {
+                color: $color-black;
                 font-size: 27px;
             }
         }
@@ -140,14 +186,13 @@ header {
 
                 a {
                     text-decoration: none;
-                    color: $color-white;
+                    color: $color-black;
                 }
             }
         }
     }
 
-    
-    @media(min-width: $breakpoint-laptop) {
+    @media (min-width: $breakpoint-laptop) {
         .container-sadbar {
             display: none;
         }

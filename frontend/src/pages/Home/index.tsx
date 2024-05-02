@@ -197,7 +197,6 @@ const PageHome: React.FC = () => {
 
 
                 />
-                <DownloadFacilitators excelClick={() => onDownload1()} printClick={() => window.print()} />
 
             </div>
 
@@ -210,7 +209,6 @@ const PageHome: React.FC = () => {
                     typeMessage={typeMessageInProduction}
                 />
 
-                <DownloadFacilitators excelClick={() => onDownload2()} printClick={() => window.print()} />
             </div>
             <div>
                 <Table
@@ -219,7 +217,6 @@ const PageHome: React.FC = () => {
                     titleTable="Aguardando Expedição"
                     typeMessage={typeMessageAwaitingShipment}
                 />
-                <DownloadFacilitators excelClick={() => onDownload3()} printClick={() => window.print()} />
             </div>
 
             <div>
@@ -230,175 +227,10 @@ const PageHome: React.FC = () => {
                     typeMessage={typeMessageDispatched}
                    
                 />
-                <DownloadFacilitators excelClick={() => onDownload4()} printClick={() => window.print()} />
+      
             </div>
 
-            <div className="table-container-dowload">
-
-                <div className="scroll-table-dowload">
-                    <table ref={refExcel1}>
-
-                        <tbody>
-
-                            <tr>
-                                <td>Nome Arquivo</td>
-                                <td>Cod Produto</td>
-                                <td>Desc Produto</td>
-                                <td>Data Entrada</td>
-                                <td>Qtd Cartões</td>
-                                <td>Qtd</td>
-                            </tr>
-
-
-                            {
-                                awaitingReleaseData.map((data: any) =>
-                                    <tr key={data.id}>
-                                        <td>{data.nome_arquivo_proc}</td>
-                                        <td>{data.cod_produto}</td>
-                                        <td>{data.desc_produto}</td>
-                                        <td>{data.dt_processamento}</td>
-                                        <td>{data.total_cartoes}</td>
-
-                                    </tr>
-                                )
-                            }
-
-
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                <div className="scroll-table-dowload">
-                    <table ref={refExcel2}>
-
-                        <tbody>
-
-                            <tr>
-                                <td>Nome Arquivo</td>
-                                <td>Cod Produto</td>
-                                <td>Desc Produto</td>
-                                <td>Data Entrada</td>
-                                <td>Qtd Cartões</td>
-                                <td>Empresa</td>
-                                <td>Rastreio</td>
-                                <td>Etapa</td>
-                            </tr>
-
-
-                            {
-                                inProductionData.map((data: any) =>
-                                    <tr key={data.id}>
-                                        <td>{data.nome_arquivo_proc}</td>
-                                        <td>{data.cod_produto}</td>
-                                        <td>{data.desc_produto}</td>
-                                        <td>{data.dt_processamento}</td>
-                                        <td>{data.total_cartoes}</td>
-                                        <td>{data.empresa}</td>
-                                        <td>{data.rastreio}</td>
-                                        <td>{data.status}</td>
-
-                                    </tr>
-                                )
-                            }
-
-
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                <div className="scroll-table-dowload">
-                    <table ref={refExcel3}>
-
-                        <tbody>
-
-                            <tr>
-                                <td>Nome Arquivo</td>
-                                <td>Cod Produto</td>
-                                <td>Desc Produto</td>
-                                <td>Data Entrada</td>
-                                <td>Qtd Cartões</td>
-                                <td>Empresa</td>
-                                <td>Rastreio</td>
-                            
-                            </tr>
-
-
-                            {
-                               awaitingShipmentData.map((data: any) =>
-                                    <tr key={data.id}>
-                                        <td>{data.nome_arquivo_proc}</td>
-                                        <td>{data.cod_produto}</td>
-                                        <td>{data.desc_produto}</td>
-                                        <td>{data.dt_processamento}</td>
-                                        <td>{data.total_cartoes}</td>
-                                        <td>{data.empresa}</td>
-                                        <td>{data.rastreio}</td>
-                                       
-
-                                    </tr>
-                                )
-                            }
-
-
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                <div className="scroll-table-dowload">
-                    <table ref={refExcel4}>
-
-                        <tbody>
-
-                            <tr>
-                                <td>Nome Arquivo</td>
-                                <td>Cod Produto</td>
-                                <td>Desc Produto</td>
-                                <td>Data Entrada</td>
-                                <td>Data Saida</td>
-                                <td>Qtd Cartões</td>
-                                <td>Empresa</td>
-                                <td>Rastreio</td>
-                            
-                            </tr>
-
-
-                            {
-                               dispatchedData.map((data: any) =>
-                                    <tr key={data.id}>
-                                        <td>{data.nome_arquivo_proc}</td>
-                                        <td>{data.cod_produto}</td>
-                                        <td>{data.desc_produto}</td>
-                                        <td>{data.dt_processamento}</td>
-                                        <td>{data.dt_expedicao}</td>
-                                        <td>{data.total_cartoes}</td>
-                                        <td>{data.empresa}</td>
-                                        <td>{data.rastreio}</td>
-                                       
-
-                                    </tr>
-                                )
-                            }
-
-
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-               
-
-            </div>
+           
         </div >
     )
 }
