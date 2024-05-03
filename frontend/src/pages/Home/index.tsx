@@ -5,6 +5,7 @@ import DefaultHeader from "../../components/layout/DefaultHeader";
 import Select from "../../components/shared/Select";
 import Chart from "chart.js/auto";
 import PercentageTable from "../../components/layout/PercentageTable";
+import CustomTable from "../../components/shared/CustomTable"; // Importe o CustomTable
 
 
 
@@ -38,7 +39,7 @@ const PageHome: React.FC = () => {
         try {
             const response = await api.post("/graph");
             const data = response.data[0];
-            const { restantes, qtd_rejeitos, total_cartoes } = data;
+            const { rejeitos, processados, expedidos, em_producao  } = data;
 
 
             const ctx = document.getElementById("wasteChart") as HTMLCanvasElement;
@@ -54,7 +55,7 @@ const PageHome: React.FC = () => {
                         labels: ['Total Produzidos', 'Quantidade de Rejeitos', 'Em Produção',],
                         datasets: [{
                             label: 'Quantidade',
-                            data: [total_cartoes, qtd_rejeitos, restantes],
+                            data: [ expedidos , rejeitos, em_producao],
                             backgroundColor: [
 
                                 'rgba(233, 101, 206, 0.5)', // Cor para "Total Produzido"
@@ -264,6 +265,8 @@ const PageHome: React.FC = () => {
             </Select>
 
 
+
+        
             <Table
                 data={Array.isArray(awaitingReleaseData) ? awaitingReleaseData : []}
                 column={columnsAwaitingRelease}

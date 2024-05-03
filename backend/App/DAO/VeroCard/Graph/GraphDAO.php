@@ -14,7 +14,7 @@ class GraphDAO extends Connection
     public function getAllGraph(): array
     {
         $graph = $this->pdo
-            ->query("SELECT * FROM view_combined_data")
+            ->query("SELECT * FROM view_redeuze_grafico_site")
             ->fetchAll(\PDO::FETCH_ASSOC);
 
         return $graph;
