@@ -212,8 +212,8 @@ const PageProductionReport: React.FC = () => {
 
 
                                 {
-                                    ProductionReportData.map((data: any) =>
-                                        <tr key={data.id}>
+                                    ProductionReportData.map((data: any, index: number) =>
+                                        <tr key={index}>
                                             <td>{data.cod_produto}</td>
                                             <td>{data.desc_produto}</td>
                                             <td>{data.dt_processamento}</td>
@@ -235,7 +235,7 @@ const PageProductionReport: React.FC = () => {
 
                 </div>
 
-                <DownloadFacilitators excelClick={() => onDownload()} textButton="Pesquisar" onClickButton={() => ProductionReportRequests()}  />
+                <DownloadFacilitators excelClick={() => onDownload()} textButton="Pesquisar" onClickButton={() => ProductionReportRequests()} />
 
             </div>
 

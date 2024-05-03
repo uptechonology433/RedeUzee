@@ -17,7 +17,7 @@ const PageHome: React.FC = () => {
     const [typeMessageAwaitingRelease, setTypeMessageAwaitingRelease] = useState(false);
     const [typeMessageAwaitingShipment, setTypeMessageAwaitingShipment] = useState(false);
     const [typeMessageDispatched, setTypeMessageDispatched] = useState(false);
-    const [formValues, setFormValues] = useState({ Type: "dmcard" });
+    const [formValues, setFormValues] = useState({ Type: "redeuze" });
     const [searchTerm, setSearchTerm] = useState("");
     const [totalProduced, setTotalProduced] = useState<number>(0);
     const [totalWaste, setTotalWaste] = useState<number>(0);
@@ -200,10 +200,8 @@ const PageHome: React.FC = () => {
             await api.get('/awaiting-release')
                 .then((data) => {
                     if (formValues.Type === "redeuze") {
-                        setAwaitingRelease(data.data[1]);
-                    } else {
                         setAwaitingRelease(data.data[0]);
-                    }
+                    } 
                 })
                 .catch(() => {
                     setTypeMessageAwaitingRelease(true);
@@ -220,10 +218,8 @@ const PageHome: React.FC = () => {
                 .then((data) => {
 
                     if (formValues.Type === "redeuze") {
-                        setAwaitingShipment(data.data[1]);
-                    } else {
                         setAwaitingShipment(data.data[0]);
-                    }
+                    } 
                 })
                 .catch(() => {
                     setTypeMessageAwaitingShipment(true);
@@ -232,10 +228,8 @@ const PageHome: React.FC = () => {
             await api.get('/dispatched')
                 .then((data) => {
                     if (formValues.Type === "redeuze") {
-                        setDispatched(data.data[1]);
-                    } else {
                         setDispatched(data.data[0]);
-                    }
+                    } 
                 })
                 .catch(() => {
                     setTypeMessageDispatched(true);
@@ -262,7 +256,7 @@ const PageHome: React.FC = () => {
             <DefaultHeader />
 
             <Select info={"Selecione o tipo de cartão:"} name="Type" onChange={handleChange}>
-                <option value="dmcard">Dm Card</option>
+            
                 <option value="redeuze">Rede Uze</option>
 
 
