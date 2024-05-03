@@ -13,7 +13,7 @@ class WasteProductsDAO extends Connection
 
     public function getAllWasteProducts(): array
 {
-    $query = "SELECT * FROM view_dmcard_relatorio_waste WHERE desc_produto LIKE '%- UZE'";
+    $query = "SELECT * FROM view_dmcard_relatorio_waste WHERE LENGTH(cod_produto) = 5";
 
     $wasteProducts = $this->pdo
         ->query($query)
@@ -29,20 +29,19 @@ class WasteProductsDAO extends Connection
 public function searchWasteProducts($searchTerm): array
 {
     $searchTerm = '%' . $searchTerm . '%';
-    $searchTermWithSuffix = $searchTerm . '- UZE%';
 
     $query = "SELECT * FROM view_dmcard_relatorio_waste 
               WHERE (cod_produto LIKE :searchTerm 
               OR desc_produto LIKE :searchTerm)
-              AND desc_produto LIKE :searchTermWithSuffix";
+              AND LENGTH(cod_produto) = 5";
 
     $statement = $this->pdo->prepare($query);
     $statement->bindParam(':searchTerm', $searchTerm, \PDO::PARAM_STR);
-    $statement->bindParam(':searchTermWithSuffix', $searchTermWithSuffix, \PDO::PARAM_STR);
     $statement->execute();
 
     $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
     return $results;
 }
+
 }

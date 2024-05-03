@@ -13,7 +13,7 @@ class InactiveProductsDAO extends Connection
 
     public function getAllInactiveProducts(): array
     {
-        $query = "SELECT * FROM view_dmcard_relatorio_produtos_inativos WHERE desc_produto LIKE '%- UZE'";
+        $query = "SELECT * FROM view_dmcard_relatorio_produtos_inativos WHERE LENGTH(cod_produto) = 5";
     
         $inactiveProducts = $this->pdo
             ->query($query)
@@ -25,21 +25,20 @@ class InactiveProductsDAO extends Connection
     public function searchInactiveProducts($searchTerm): array
     {
         $searchTerm = '%' . $searchTerm . '%';
-        $searchTermWithSuffix = $searchTerm . '- UZE%';
     
         $query = "SELECT * FROM view_dmcard_relatorio_produtos_inativos 
                   WHERE (cod_produto LIKE :searchTerm 
                   OR desc_produto LIKE :searchTerm)
-                  AND desc_produto LIKE :searchTermWithSuffix";
+                  AND LENGTH(cod_produto) = 5";
     
         $statement = $this->pdo->prepare($query);
         $statement->bindParam(':searchTerm', $searchTerm, \PDO::PARAM_STR);
-        $statement->bindParam(':searchTermWithSuffix', $searchTermWithSuffix, \PDO::PARAM_STR);
         $statement->execute();
     
         $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
     
         return $results;
     }
+    
     
 }

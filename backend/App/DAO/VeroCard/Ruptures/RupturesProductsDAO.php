@@ -11,35 +11,34 @@ class RupturesProductsDAO extends Connection
         parent::__construct();
     }
 
-    public function getAllRupturesProducts(): array
-    {
-        $query = "SELECT * FROM view_combined_ruptura_dmcard WHERE \"PRODUTO\" LIKE '%- UZE'";
+ public function getAllRupturesProducts(): array
+{
+    $query = "SELECT * FROM view_combined_ruptura_dmcard WHERE LENGTH(\"COD PROD\") = 5";
     
-        $rupturesProducts = $this->pdo
-            ->query($query)
-            ->fetchAll(\PDO::FETCH_ASSOC);
+    $rupturesProducts = $this->pdo
+        ->query($query)
+        ->fetchAll(\PDO::FETCH_ASSOC);
     
-        return $rupturesProducts;
-    }
-    
-    public function searchRuptureProducts($searchTerm): array
-    {
-        $searchTerm = '%' . $searchTerm . '%';
-        $searchTermWithSuffix = $searchTerm . '- UZE%';
-    
-        $query = "SELECT * FROM view_combined_ruptura_dmcard 
-                  WHERE (\"COD PROD\" LIKE :searchTerm 
-                  OR \"PRODUTO\" LIKE :searchTerm)
-                  AND \"PRODUTO\" LIKE :searchTermWithSuffix";
-    
-        $statement = $this->pdo->prepare($query);
-        $statement->bindParam(':searchTerm', $searchTerm, \PDO::PARAM_STR);
-        $statement->bindParam(':searchTermWithSuffix', $searchTermWithSuffix, \PDO::PARAM_STR);
-        $statement->execute();
-    
-        $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
-    
-        return $results;
-    }
+    return $rupturesProducts;
+}
+
+public function searchRuptureProducts($searchTerm): array
+{
+    $searchTerm = '%' . $searchTerm . '%';
+
+    $query = "SELECT * FROM view_combined_ruptura_dmcard 
+              WHERE (\"COD PROD\" LIKE :searchTerm 
+              OR \"PRODUTO\" LIKE :searchTerm)
+              AND LENGTH(\"COD PROD\") = 5";
+
+    $statement = $this->pdo->prepare($query);
+    $statement->bindParam(':searchTerm', $searchTerm, \PDO::PARAM_STR);
+    $statement->execute();
+
+    $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+    return $results;
+}
+
     
 }
