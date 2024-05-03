@@ -211,7 +211,7 @@ const PageStock: React.FC = () => {
 
                 </div>
 
-                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} textButton={'Pesquisar'} onClickButton={() => ProductionReportRequests()} csvData={stockData} />
+                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} textButton={'Pesquisar'} onClickButton={() => ProductionReportRequests()}  />
 
             </div>
 
