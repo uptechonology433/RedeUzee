@@ -1,60 +1,144 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../../connectionAPI";
 import Table from "../../components/shared/Table";
 import DefaultHeader from "../../components/layout/DefaultHeader";
-import DownloadFacilitators from "../../components/layout/DownloadFacilitators";
-import { useDownloadExcel } from "react-export-table-to-excel";
+import Select from "../../components/shared/Select";
+import Chart from "chart.js/auto";
+import PercentageTable from "../../components/layout/PercentageTable";
+
 
 
 const PageHome: React.FC = () => {
-
     const [inProductionData, setInProductionData] = useState([]);
-    const [awaitingShipmentData, setAwaitingShipment] = useState([]);
     const [awaitingReleaseData, setAwaitingRelease] = useState([]);
+    const [awaitingShipmentData, setAwaitingShipment] = useState([]);
     const [dispatchedData, setDispatched] = useState([]);
     const [typeMessageInProduction, setTypeMessageInProduction] = useState(false);
     const [typeMessageAwaitingRelease, setTypeMessageAwaitingRelease] = useState(false);
     const [typeMessageAwaitingShipment, setTypeMessageAwaitingShipment] = useState(false);
     const [typeMessageDispatched, setTypeMessageDispatched] = useState(false);
+    const [formValues, setFormValues] = useState({ Type: "dmcard" });
+    const [searchTerm, setSearchTerm] = useState("");
+    const [totalProduced, setTotalProduced] = useState<number>(0);
+    const [totalWaste, setTotalWaste] = useState<number>(0);
+    const [restantes, setRestantes] = useState<number>(0);
+    const [wasteData, setWasteData] = useState<{ desc_produto: string; cod_produto: string; qtd: number; desc_perda: string; }[]>([]);
+
+
+    const [producedTotal, setProducedTotal] = useState<number>(0);
+
+    const [pieChart, setPieChart] = useState<Chart<'pie' | 'doughnut', any[], string> | null>(null);
+
+    useEffect(() => {
+        fetchWasteProducts();
+    }, []);
+
+
+    const fetchWasteProducts = async () => {
+        try {
+            const response = await api.post("/graph");
+            const data = response.data[0];
+            const { restantes, qtd_rejeitos, total_cartoes } = data;
+
+
+            const ctx = document.getElementById("wasteChart") as HTMLCanvasElement;
+
+            if (ctx) {
+                if (pieChart) {
+                    pieChart.destroy();
+                }
+
+                const chart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Total Produzidos', 'Quantidade de Rejeitos', 'Em Produção',],
+                        datasets: [{
+                            label: 'Quantidade',
+                            data: [total_cartoes, qtd_rejeitos, restantes],
+                            backgroundColor: [
+
+                                'rgba(233, 101, 206, 0.5)', // Cor para "Total Produzido"
+                                'rgba(70, 72, 45, 0.5)',
+                                'rgba(72, 83, 240, 0.5)', // Cor para "Quantidade de Rejeitos"
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Rejeitos',
+                                font: {
+                                    size: 18
+                                }
+                            },
+                            legend: {
+                                labels: {
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                        }
+                    }
+                });
+                setPieChart(chart);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+    const handleChange = (e: any) => {
+        setFormValues({
+            ...formValues,
+            [e.target.name]: e.target.value
+        })
+    }
 
 
 
     const columnsAwaitingRelease: Array<Object> = [
+
         {
-            name: 'Nome Arquivo',
+            name: 'Nome do arquivo',
             selector: (row: any) => row.nome_arquivo_proc
 
         },
-  
         {
-            name: 'Data Entrada',
+            name: 'Data de entrada',
             selector: (row: any) => row.dt_processamento
         },
         {
-            name: 'Qtd Cartões',
+            name: 'Qtd cartões',
             selector: (row: any) => row.total_cartoes
         }
     ];
 
+
     const columnsInProduction: Array<Object> = [
+
         {
-            name: 'Nome Arquivo',
+            name: 'Nome do arquivo',
             selector: (row: any) => row.nome_arquivo_proc,
 
         },
- 
-     
+
         {
-            name: 'Data Entrada',
+            name: 'Data Pros',
             selector: (row: any) => row.dt_processamento
 
         },
         {
-            name: 'Qtd Cartões',
+            name: 'Quantidade de cartões',
             selector: (row: any) => row.total_cartoes,
             sortable: true
         },
-
         {
             name: 'Etapa',
             selector: (row: any) => row.status,
@@ -63,122 +147,111 @@ const PageHome: React.FC = () => {
 
     ];
 
+
+
+
+
+
     const columnsAwaitingShipment: Array<Object> = [
+
         {
-            name: 'Nome Arquivo',
+            name: 'Nome do arquivo',
             selector: (row: any) => row.nome_arquivo_proc
 
         },
-    
+
         {
-            name: 'Data Entrada',
+            name: 'Data de entrada',
             selector: (row: any) => row.dt_processamento
         },
         {
             name: 'Qtd cartões',
             selector: (row: any) => row.total_cartoes
         },
-    
-        {
-            name: 'Rastreio',
-            selector: (row: any) => row.rastreio
-        }
 
     ];
 
     const columnsDispatched: Array<Object> = [
-        {
-            name: 'Nome Arquivo',
-            selector: (row: any) => row.nome_arquivo_proc
 
-        },
-     
         {
-            name: 'Data Entrada',
+            name: 'Nome do arquivo',
+            selector: (row: any) => row.nome_arquivo_proc
+        },
+        {
+            name: 'Data de entrada',
             selector: (row: any) => row.dt_processamento
         },
         {
-            name: 'Data Saida',
+            name: 'Data de saida',
             selector: (row: any) => row.dt_expedicao
         },
         {
-            name: 'Qtd Cartões',
+            name: 'Qtd cartões',
             selector: (row: any) => row.total_cartoes
-        }
+        },
 
     ];
+
     useEffect(() => {
 
         const HomePageRequests = async () => {
+
+
             await api.get('/awaiting-release')
                 .then((data) => {
-                    console.log("Dados recebidos da rota /awaiting-release:", data.data);
-                    setAwaitingRelease(data.data);
-                }).catch(() => {
+                    if (formValues.Type === "redeuze") {
+                        setAwaitingRelease(data.data[1]);
+                    } else {
+                        setAwaitingRelease(data.data[0]);
+                    }
+                })
+                .catch(() => {
                     setTypeMessageAwaitingRelease(true);
                 });
 
-            await api.post('/production')
+            await api.post('/production', { tipo: formValues.Type })
                 .then((data) => {
-                    console.log('teste')
                     setInProductionData(data.data)
-
                 }).catch(() => {
                     setTypeMessageInProduction(true)
                 });
 
             await api.get('/awaiting-shipment')
                 .then((data) => {
-                    console.log("Dados recebidos da rota /awaiting-shipment:", data.data);
-                    setAwaitingShipment(data.data);
-                }).catch((error) => {
-                    console.error("Erro ao obter dados da rota /awaiting-shipment:", error);
+
+                    if (formValues.Type === "redeuze") {
+                        setAwaitingShipment(data.data[1]);
+                    } else {
+                        setAwaitingShipment(data.data[0]);
+                    }
+                })
+                .catch(() => {
                     setTypeMessageAwaitingShipment(true);
                 });
 
             await api.get('/dispatched')
                 .then((data) => {
-                    console.log("Dados recebidos da rota /dispatcheds:", data.data);
-                    setDispatched(data.data);
-                }).catch((error) => {
-                    console.error("Erro ao obter dados da rota /dispatchedssssssssssss:", error);
+                    if (formValues.Type === "redeuze") {
+                        setDispatched(data.data[1]);
+                    } else {
+                        setDispatched(data.data[0]);
+                    }
+                })
+                .catch(() => {
                     setTypeMessageDispatched(true);
                 });
         }
 
-        HomePageRequests();
+        HomePageRequests()
 
-    }, []);
+    }, [formValues]);
 
-    
-    const refExcel1: any = useRef();
-    const { onDownload: onDownload1 } = useDownloadExcel({
-        currentTableRef: refExcel1.current,
-        filename: "Aguardando Liberação",
-        sheet: "Aguardando Liberação"
-    });
-    
-    const refExcel2: any = useRef();
-    const { onDownload: onDownload2 } = useDownloadExcel({
-        currentTableRef: refExcel2.current,
-        filename: "Em Produção",
-        sheet: "Em Produção"
-    });
-    
-    const refExcel3: any = useRef();
-    const { onDownload: onDownload3 } = useDownloadExcel({
-        currentTableRef: refExcel3.current,
-        filename: "Aguardando Expedição",
-        sheet: "Aguardando Expedição"
-    });
-    
-    const refExcel4: any = useRef();
-    const { onDownload: onDownload4 } = useDownloadExcel({
-        currentTableRef: refExcel4.current,
-        filename: "Expedidos",
-        sheet: "Expedidos"
-    });
-    
+
+
+
+
+
+
 
 
 
@@ -188,49 +261,53 @@ const PageHome: React.FC = () => {
 
             <DefaultHeader />
 
-            <div>
-                <Table
-                    data={Array.isArray(awaitingReleaseData) ? awaitingReleaseData[0] : []}
-                    column={columnsAwaitingRelease}
-                    titleTable="Aguardando liberação"
-                    typeMessage={typeMessageAwaitingRelease}
+            <Select info={"Selecione o tipo de cartão:"} name="Type" onChange={handleChange}>
+                <option value="dmcard">Dm Card</option>
+                <option value="redeuze">Rede Uze</option>
 
 
-                />
+
+            </Select>
+
+
+            <Table
+                data={Array.isArray(awaitingReleaseData) ? awaitingReleaseData : []}
+                column={columnsAwaitingRelease}
+                titleTable="Aguardando liberação"
+                typeMessage={typeMessageAwaitingRelease}
+            />
+
+
+            <Table
+                data={Array.isArray(inProductionData) ? inProductionData : []}
+                column={columnsInProduction}
+                titleTable="Em produção"
+                typeMessage={typeMessageInProduction}
+
+
+            />
+
+            <Table
+                data={Array.isArray(awaitingShipmentData) ? awaitingShipmentData : []}
+                column={columnsAwaitingShipment}
+                titleTable="Aguardando Expedição"
+                typeMessage={typeMessageAwaitingShipment} />
+
+            <Table
+                data={Array.isArray(dispatchedData) ? dispatchedData : []}
+                column={columnsDispatched}
+                titleTable="Expedidos"
+                typeMessage={typeMessageDispatched} />
+
+            <div className="graph">
+                <PercentageTable />
+                <div className="chart-container">
+                    <canvas id="wasteChart" width="600" height="400"></canvas>
+                </div>
 
             </div>
 
 
-            <div>
-                <Table
-                    data={Array.isArray(inProductionData) ? inProductionData : [0]}
-                    column={columnsInProduction}
-                    titleTable="Em produção"
-                    typeMessage={typeMessageInProduction}
-                />
-
-            </div>
-            <div>
-                <Table
-                    data={Array.isArray(awaitingShipmentData) ? awaitingShipmentData[0] : []}
-                    column={columnsAwaitingShipment}
-                    titleTable="Aguardando Expedição"
-                    typeMessage={typeMessageAwaitingShipment}
-                />
-            </div>
-
-            <div>
-                <Table
-                    data={Array.isArray(dispatchedData) ? dispatchedData[0] : []}
-                    column={columnsDispatched}
-                    titleTable="Expedidos"
-                    typeMessage={typeMessageDispatched}
-                   
-                />
-      
-            </div>
-
-           
         </div >
     )
 }
