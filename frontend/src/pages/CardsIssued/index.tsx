@@ -191,7 +191,7 @@ const PageCardsIssued: React.FC = () => {
           </div>
 
           <div className="inputs">
-            <Select info={"Tipo de Envio:"} name="cardType" onChange>
+            <Select info={"Tipo de Envio:"} onChange>
               <option value="CFC" selected>Cliente-Flash Courier</option>
             </Select>
 
@@ -201,66 +201,47 @@ const PageCardsIssued: React.FC = () => {
         {
           Array.isArray(cardsIssuedReportData) && cardsIssuedReportData.length >= 1 &&
 
-          < Table
+          <Table
             column={columnsCardsIssuedReport}
             data={cardsIssuedReportData}
             typeMessage={cardsIssuedReportMessage}
             refExcel={refExcel}
           />
-
         }
 
         <div className="table-container-dowload">
-
           <div className="scroll-table-dowload">
             <table ref={refExcel}>
-
               <tbody>
-
                 <tr>
-                  <td>Nome do aqrquivo</td>
+                  <td>Nome do arquivo</td>
                   <td>Titular</td>
                   <td>N° Cartão</td>
                   <td>Rastreio</td>
                   <td>Cod Conta</td>
                   <td>Status</td>
                   <td>Tipo Envio</td>
-
                   <td>Data Pross</td>
                   <td>Data Expedido</td>
                   <td>Cod Cartão</td>
-
-
-
                 </tr>
-
               </tbody>
-              {
-                cardsIssuedReportData.map((data: any) =>
-                  <tr key={data.id}>
-                    <td>{data.nome_arquivo_proc}</td>
-                    <td>{data.titular}</td>
-                    <td>{data.nr_cartao}</td>
-                    <td>{data.rastreio}</td>
-                    <td>{data.codigo_conta}</td>
-
-                    <td>{data.desc_status}</td>
-                    <td>CLIENTE - FLASH COURIER</td>
-                    <td>{data.dt_op}</td>
-
-                    <td>{data.dt_expedicao}</td>
-                    <td>{data.codigo_cartao}</td>
-
-
-                  </tr>
-
-                )
-              }
-
+              {Array.isArray(cardsIssuedReportData) && cardsIssuedReportData.map((data: any) =>
+                <tr key={data.id}>
+                  <td>{data.nome_arquivo_proc}</td>
+                  <td>{data.titular}</td>
+                  <td>{data.nr_cartao}</td>
+                  <td>{data.rastreio}</td>
+                  <td>{data.codigo_conta}</td>
+                  <td>{data.desc_status}</td>
+                  <td>CLIENTE - FLASH COURIER</td>
+                  <td>{data.dt_op}</td>
+                  <td>{data.dt_expedicao}</td>
+                  <td>{data.codigo_cartao}</td>
+                </tr>
+              )}
             </table>
-
           </div>
-
         </div>
 
 
