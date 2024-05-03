@@ -47,15 +47,15 @@ const PageProductionReport: React.FC = () => {
 
     const columnsProductionReport: Array<Object> = [
         {
-            name: 'Nome do arquivo',
+            name: 'Nome Arquivo',
             selector: (row: any) => row.nome_arquivo_proc
         },
         {
-            name: 'Data de processamento',
+            name: 'Data Processamento',
             selector: (row: any) => row.dt_processamento
         },
         {
-            name: 'Data de expedição',
+            name: 'Data Expedição',
             selector: (row: any) => row.dt_expedicao
         },
 
@@ -185,7 +185,7 @@ const PageProductionReport: React.FC = () => {
                         column={columnsProductionReport}
                         data={ProductionReportData}
                         typeMessage={ProductionReportMessage}
-                        refExcel={refExcel}
+                       
                     />
 
                 }
@@ -201,26 +201,24 @@ const PageProductionReport: React.FC = () => {
                             <tbody>
 
                                 <tr>
-                                    <td>Código do produto</td>
-                                    <td>Descrição do produto</td>
-                                    <td>Data de processamento</td>
-                                    <td>Data de expedição</td>
-                                    <td>Total de cartões</td>
+                                    <td>Nome Arquivo</td>
+                                    <td>Data Processamento</td>
+                                    <td>Data Expedição</td>
                                     <td>Status</td>
-                                    <td>Rastreio</td>
+                                    <td>Qtd cartões</td>
+
                                 </tr>
 
 
                                 {
                                     ProductionReportData.map((data: any, index: number) =>
                                         <tr key={index}>
-                                            <td>{data.cod_produto}</td>
-                                            <td>{data.desc_produto}</td>
+                                            <td>{data.nome_arquivo_proc}</td>
                                             <td>{data.dt_processamento}</td>
                                             <td>{data.dt_expedicao}</td>
-                                            <td>{data.total_cartoes}</td>
                                             <td>{data.status}</td>
-                                            <td>{data.rastreio}</td>
+                                            <td>{data.total_cartoes}</td>
+
                                         </tr>
                                     )
                                 }
