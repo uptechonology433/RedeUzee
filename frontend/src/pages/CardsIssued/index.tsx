@@ -161,8 +161,8 @@ const PageCardsIssued: React.FC = () => {
             />
             <Input
               name="accontCode"
-              placeholder="Nº Conta..."
-              info="N° Conta"
+              placeholder="Cod Conta..."
+              info="Cod Conta"
               onChange={handleChange}
             />
           </div>
