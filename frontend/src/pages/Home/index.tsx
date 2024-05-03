@@ -19,15 +19,7 @@ const PageHome: React.FC = () => {
     const [typeMessageAwaitingShipment, setTypeMessageAwaitingShipment] = useState(false);
     const [typeMessageDispatched, setTypeMessageDispatched] = useState(false);
     const [formValues, setFormValues] = useState({ Type: "redeuze" });
-    const [searchTerm, setSearchTerm] = useState("");
-    const [totalProduced, setTotalProduced] = useState<number>(0);
-    const [totalWaste, setTotalWaste] = useState<number>(0);
-    const [restantes, setRestantes] = useState<number>(0);
-    const [wasteData, setWasteData] = useState<{ desc_produto: string; cod_produto: string; qtd: number; desc_perda: string; }[]>([]);
-
-
-    const [producedTotal, setProducedTotal] = useState<number>(0);
-
+    const [rupturesData, setRupturesData] = useState([]);
     const [pieChart, setPieChart] = useState<Chart<'pie' | 'doughnut', any[], string> | null>(null);
 
     useEffect(() => {
@@ -39,7 +31,7 @@ const PageHome: React.FC = () => {
         try {
             const response = await api.post("/graph");
             const data = response.data[0];
-            const { rejeitos, processados, expedidos, em_producao  } = data;
+            const { rejeitos, processados, expedidos, em_producao } = data;
 
 
             const ctx = document.getElementById("wasteChart") as HTMLCanvasElement;
@@ -55,12 +47,12 @@ const PageHome: React.FC = () => {
                         labels: ['Total Produzidos', 'Quantidade de Rejeitos', 'Em Produção',],
                         datasets: [{
                             label: 'Quantidade',
-                            data: [ expedidos , rejeitos, em_producao],
+                            data: [expedidos, rejeitos, em_producao],
                             backgroundColor: [
 
-                                'rgba(233, 101, 206, 0.5)', // Cor para "Total Produzido"
-                                'rgba(70, 72, 45, 0.5)',
-                                'rgba(72, 83, 240, 0.5)', // Cor para "Quantidade de Rejeitos"
+                                'rgba(43, 23, 194, 0.5)', // Cor para "Total Produzido"
+                                'rgba(8, 8, 8, 0.5)',
+                                'rgba(227, 119, 18, 0.5)', // Cor para "Quantidade de Rejeitos"
 
                             ],
                             borderWidth: 1
@@ -72,7 +64,7 @@ const PageHome: React.FC = () => {
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Rejeitos',
+                                text: 'Performance Mensal',
                                 font: {
                                     size: 18
                                 }
@@ -193,6 +185,45 @@ const PageHome: React.FC = () => {
 
     ];
 
+
+    const columnsRuptures: Array<Object> = [
+        {
+            name: 'Codigo do produto',
+            selector: (row: any) => row["COD PROD"],
+            sortable: true
+        },
+        {
+            name: 'Produto',
+            selector: (row: any) => row.PRODUTO,
+            sortable: true
+        },
+        {
+            name: 'Data',
+            selector: (row: any) => row.dt_op,
+            sortable: true
+        },
+        {
+            name: 'Estoque',
+            selector: (row: any) => row["QTD ESTQ"],
+            sortable: true
+        },
+        {
+            name: 'Qtd Cartões',
+            selector: (row: any) => row["QTD ARQ"],
+            sortable: true
+        },
+        {
+            name: 'Diferença',
+            selector: (row: any) => row.DIFERENÇA,
+            sortable: true
+        },
+        {
+            name: 'Descrição',
+            selector: (row: any) => row.observacao,
+            sortable: true
+        }
+    ];
+
     useEffect(() => {
 
         const HomePageRequests = async () => {
@@ -202,7 +233,7 @@ const PageHome: React.FC = () => {
                 .then((data) => {
                     if (formValues.Type === "redeuze") {
                         setAwaitingRelease(data.data[0]);
-                    } 
+                    }
                 })
                 .catch(() => {
                     setTypeMessageAwaitingRelease(true);
@@ -220,7 +251,7 @@ const PageHome: React.FC = () => {
 
                     if (formValues.Type === "redeuze") {
                         setAwaitingShipment(data.data[0]);
-                    } 
+                    }
                 })
                 .catch(() => {
                     setTypeMessageAwaitingShipment(true);
@@ -230,7 +261,7 @@ const PageHome: React.FC = () => {
                 .then((data) => {
                     if (formValues.Type === "redeuze") {
                         setDispatched(data.data[0]);
-                    } 
+                    }
                 })
                 .catch(() => {
                     setTypeMessageDispatched(true);
@@ -243,6 +274,19 @@ const PageHome: React.FC = () => {
 
 
 
+    useEffect(() => {
+        fetchRupturesProducts();
+    }, []);
+
+    const fetchRupturesProducts = async () => {
+        try {
+            const response = await api.post("/ruptures-products");
+            setRupturesData(response.data);
+        } catch (error) {
+            console.log(error);
+
+        }
+    };
 
 
 
@@ -257,7 +301,7 @@ const PageHome: React.FC = () => {
             <DefaultHeader />
 
             <Select info={"Selecione o tipo de cartão:"} name="Type" onChange={handleChange}>
-            
+
                 <option value="redeuze">Rede Uze</option>
 
 
@@ -266,7 +310,7 @@ const PageHome: React.FC = () => {
 
 
 
-        
+
             <Table
                 data={Array.isArray(awaitingReleaseData) ? awaitingReleaseData : []}
                 column={columnsAwaitingRelease}
@@ -296,6 +340,11 @@ const PageHome: React.FC = () => {
                 titleTable="Expedidos"
                 typeMessage={typeMessageDispatched} />
 
+            <Table
+                data={rupturesData}
+                column={columnsRuptures}
+                titleTable="Rejeitos"
+            />
             <div className="graph">
                 <PercentageTable />
                 <div className="chart-container">

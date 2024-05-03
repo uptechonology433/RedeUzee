@@ -31,7 +31,7 @@ header {
 
     li:hover {
         cursor: pointer;
-        border-bottom: 3px solid $color-white;
+        border-bottom: 3px solid $color-yellow;
         transition: all 0.1s;
         transform: scale(1.1);
         margin-top: -3px;
@@ -47,7 +47,7 @@ header {
         justify-content: space-between;
 
         .icon {
-            color: $color-black;
+            color: $color-yellow;
             font-size: 35px;
             cursor: pointer;
             display: none;
@@ -73,7 +73,7 @@ header {
 
                 a, span {
                     text-decoration: none;
-                    color: $color-white;
+                    color: $color-yellow;
                 }
             }
 
@@ -159,7 +159,7 @@ header {
             justify-content: right;
 
             .icon {
-                color: $color-black;
+                color: $color-yellow;
                 font-size: 35px;
                 cursor: pointer;
             }
@@ -167,7 +167,7 @@ header {
 
         .nav-list {
             .icon {
-                color: $color-black;
+                color: $color-yellow;
                 font-size: 27px;
             }
         }
@@ -186,7 +186,7 @@ header {
 
                 a {
                     text-decoration: none;
-                    color: $color-black;
+                    color: $color-yellow;
                 }
             }
         }
