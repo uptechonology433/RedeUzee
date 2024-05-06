@@ -343,7 +343,7 @@ const PageHome: React.FC = () => {
             <Table
                 data={rupturesData}
                 column={columnsRuptures}
-                titleTable="Rejeitos"
+                titleTable="Rupturas"
             />
             <div className="graph">
                 <PercentageTable />
