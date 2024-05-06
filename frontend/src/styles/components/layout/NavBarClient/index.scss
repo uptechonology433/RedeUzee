@@ -99,6 +99,7 @@ header {
                         padding: 0; /* Removendo o padding padrão */
                         margin: 0; 
                     }
+                   
                 
                     li {
                         text-align: center;
@@ -117,6 +118,14 @@ header {
                             font-size: 14px;
                             color: rgb(57, 57, 57);
                         }
+
+                        
+                    }
+                }
+                .insumos{
+                        
+                    span{
+                        color:$color-yellow;
                     }
                 }
 

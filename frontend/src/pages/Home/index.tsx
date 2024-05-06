@@ -110,6 +110,10 @@ const PageHome: React.FC = () => {
         {
             name: 'Qtd cartões',
             selector: (row: any) => row.total_cartoes
+        },
+        {
+            name: 'Observação',
+            selector: (row: any) => row.observacao
         }
     ];
 
@@ -233,6 +237,7 @@ const PageHome: React.FC = () => {
                 .then((data) => {
                     if (formValues.Type === "redeuze") {
                         setAwaitingRelease(data.data[0]);
+                        console.log(data.data[0])
                     }
                 })
                 .catch(() => {
