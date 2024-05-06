@@ -113,6 +113,10 @@ header {
                         &:hover {
                             background-color: lighten(#f9f9f9, 10%);
                         }
+                        a, span {
+                            font-size: 14px;
+                            color: rgb(57, 57, 57);
+                        }
 
                         .select{
                             font-size: 14px;
