@@ -81,7 +81,7 @@ header {
                 position: relative;
                 display: inline-block;
                 
-
+            
                 .submenu {
                     display: none;
                     position: absolute;
@@ -92,11 +92,11 @@ header {
                     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
                     z-index: 1;
                 
-                    /* Modificação para orientação vertical */
+                 
                     ul {
                         display: flex;
-                        flex-direction: column; /* Alteração principal para orientação vertical */
-                        padding: 0; /* Removendo o padding padrão */
+                        flex-direction: column; 
+                        padding: 0; 
                         margin: 0; 
                     }
                    
@@ -122,12 +122,12 @@ header {
                         
                     }
                 }
-                .insumos{
+               
+                    
                         
-                    span{
-                        color:$color-yellow;
-                    }
-                }
+                    
+                
+               
 
                 &:hover {
                     .submenu {
