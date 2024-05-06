@@ -13,12 +13,12 @@ class UsersDAO extends Connection
         parent::__construct();
     }
 
-    public function getUserByName(string $name): ?UsersModel // Alterado o nome do método para getUserByName
+    public function getUserByName(string $name): ?UsersModel 
     {
         $statement = $this->pdo
-            ->prepare('SELECT id ,nome, email, senha , admin FROM usuarios_truck_pag WHERE nome = :nome;'); // Alterado para buscar pelo nome
+            ->prepare('SELECT id ,nome, email, senha , admin FROM usuarios_redeuze WHERE nome = :nome;');
 
-        $statement->bindParam('nome', $name); // Alterado para bind pelo nome
+        $statement->bindParam('nome', $name);
 
         $statement->execute();
 
