@@ -62,13 +62,14 @@ const NavBarClient: React.FC = () => {
                                     <ul>
                                         <li><Link to={`${process.env.PUBLIC_URL}/estoque`}>Estoque</Link></li>
                                         <li><Link to={`${process.env.PUBLIC_URL}/rejeitos`}>Rejeitos</Link></li>
-                                        <li><Link to={`${process.env.PUBLIC_URL}/estoque`}>Inativos</Link></li>
+                                        <li><Link to={`${process.env.PUBLIC_URL}/inativos`}>Inativos</Link></li>
                                         <li><Link to={`${process.env.PUBLIC_URL}/rupturas`}>Rupturas</Link></li>
-                                        <li><Link to={`${process.env.PUBLIC_URL}/cartoes-emitidos`}>Cartões emitidos</Link></li>
+                                       
                                     </ul>
                                 </div>
                             )}
                         </div>
+                        <li><Link to={`${process.env.PUBLIC_URL}/cartoes-emitidos`}>Cartões emitidos</Link></li>
                         {authenticatedAdmin && (
                             <li><Link to={`${process.env.PUBLIC_URL}/usuarios`}>Admin users</Link></li>
                         )}
