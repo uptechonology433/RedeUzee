@@ -103,7 +103,7 @@ const PageWaste: React.FC = () => {
                     data={wasteData}
                     column={columnsWaste}
                     typeMessage={ProductionReportMessage}
-                    refExcel={refExcel}
+               
 
                 />
 

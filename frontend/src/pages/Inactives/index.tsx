@@ -78,7 +78,7 @@ const PageInactive: React.FC = () => {
                     data={inactiveData}
                     column={columnsInactives}
                     typeMessage={ProductionReportMessage}
-                    refExcel={refExcel}
+              
                 />
 
                 <div className="table-container-dowload">

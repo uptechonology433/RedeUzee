@@ -113,7 +113,7 @@ const PageRuptures: React.FC = () => {
                     data={rupturesData}
                     column={columnsRuptures}
                     typeMessage={ProductionReportMessage}
-                    refExcel={refExcel}
+                 
                 />
 
                 <div className="table-container-dowload">
