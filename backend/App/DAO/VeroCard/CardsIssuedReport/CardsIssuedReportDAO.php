@@ -71,7 +71,7 @@ class CardsIssuedReportDAO extends Connection
          to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
-         desc_status FROM view_redeuze_relatorio_cartoes  where dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal OR dt_op BETWEEN :datainicial AND :datafinal;");
+         desc_status FROM view_redeuze_relatorio_cartoes  where (dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal) AND (dt_op BETWEEN :datainicial AND :datafinal);");
 
         $statement->execute(['expedicaoinicial' => $CardsIssuedReportModel->getInitialShippingdate(), 'expedicaofinal' => $CardsIssuedReportModel->getFinalShippingdate(), 'datainicial' => $CardsIssuedReportModel->getInitialProcessinDate(), 'datafinal' => $CardsIssuedReportModel->getFinalProcessinDate()]);
 

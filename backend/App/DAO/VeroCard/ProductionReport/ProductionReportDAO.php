@@ -63,27 +63,14 @@ class ProductionReportDAO extends Connection
 
         return $response;
     }
-
-    public function getProductionReportFilterDatesAndShippingDAO(ProductionReportModel $productionReportModel): array
+    public function getCardsIssuedReportFilterDatesInGeneralRedeUzeDAO(ProductionReportModel $productionReportModel): array
     {
-        $statement = $this->pdo->prepare("SELECT
-        to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento,
+        $statement = $this->pdo->prepare("SELECT   to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento, 
         to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         nome_arquivo_proc,
-        total_cartoes,
-        status 
-    FROM 
-        view_redeuze_producao 
-    WHERE 
-        dt_processamento BETWEEN :datainicial AND :datafinal
-        AND dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal ;");
+       total_cartoes, status from view_redeuze_producao  where (dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal) AND (dt_processamento BETWEEN :datainicial AND :datafinal);");
 
-        $statement->execute([
-            'datainicial' => $productionReportModel->getInitialProcessinDate(),
-            'datafinal' => $productionReportModel->getFinalProcessinDate(),
-            'expedicaoinicial' => $productionReportModel->getInitialShippingdate(),
-            'expedicaofinal' => $productionReportModel->getFinalShippingdate()
-        ]);
+        $statement->execute(['expedicaoinicial' => $productionReportModel->getInitialShippingdate(), 'expedicaofinal' => $productionReportModel->getFinalShippingdate(), 'datainicial' => $productionReportModel->getInitialProcessinDate(), 'datafinal' => $productionReportModel->getFinalProcessinDate()]);
 
         $response = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
