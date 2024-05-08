@@ -71,7 +71,7 @@ final class CardsIssuedReportController
                     // Se ambos o arquivo e o titular foram especificados, busca por ambos
                     $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileHolderRedeUzeDAO($cardsIssuedReportModel);
                 }
-            }else if (!empty(trim($data['codigo_conta']))) {
+            } else if (!empty(trim($data['codigo_conta']))) {
                 // Se apenas o arquivo foi especificado, busca pelo titular
                 if (empty(trim($data['arquivo']))) {
                     $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterHolderRedeUzeDAO($cardsIssuedReportModel);
@@ -79,7 +79,7 @@ final class CardsIssuedReportController
                     // Se ambos o arquivo e o titular foram especificados, busca por ambos
                     $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileHolderRedeUzeDAO($cardsIssuedReportModel);
                 }
-            }else if (!empty(trim($data['codigo_cartao']))) {
+            } else if (!empty(trim($data['codigo_cartao']))) {
                 // Se apenas o arquivo foi especificado, busca pelo titular
                 if (empty(trim($data['arquivo']))) {
                     $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterHolderRedeUzeDAO($cardsIssuedReportModel);
@@ -87,14 +87,41 @@ final class CardsIssuedReportController
                     // Se ambos o arquivo e o titular foram especificados, busca por ambos
                     $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileHolderRedeUzeDAO($cardsIssuedReportModel);
                 }
-            }else if (!empty(trim($data['arquivo']))) {
+            } else if (!empty(trim($data['desc_status'])) && $data['desc_status'] === 'EmProducao') {
+                // Se apenas o arquivo foi especificado, busca pelo titular
+                if (empty(trim($data['codigo_conta']))) {
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterStatusInProductionRedeUzeDAO($cardsIssuedReportModel);
+                } else {
+                    // Se ambos o arquivo e o titular foram especificados, busca por ambos
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterStatusInProductionAccontCodeRedeUzeDAO($cardsIssuedReportModel);
+                }
+            } else if (!empty(trim($data['desc_status'])) && $data['desc_status'] === 'EmProducao') {
+                // Se apenas o arquivo foi especificado, busca pelo titular
+                if (empty(trim($data['codigo_cartao']))) {
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterStatusInProductionRedeUzeDAO($cardsIssuedReportModel);
+                } else {
+                    // Se ambos o arquivo e o titular foram especificados, busca por ambos
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterStatusInProductionCardCodeRedeUzeDAO($cardsIssuedReportModel);
+                }
+            } else if (!empty(trim($data['desc_status'])) && $data['desc_status'] === 'Expedido') {
+                // Se apenas o arquivo foi especificado, busca pelo titular
+                if (empty(trim($data['codigo_conta']))) {
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterStatusDispatichedRedeUzeDAO($cardsIssuedReportModel);
+                } else {
+                    // Se ambos o arquivo e o titular foram especificados, busca por ambos
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterStatusDispatichedAccontCodeRedeUzeDAO($cardsIssuedReportModel);
+                }
+            } else if (!empty(trim($data['desc_status'])) && $data['desc_status'] === 'Expedido') {
+                // Se apenas o arquivo foi especificado, busca pelo titular
+                if (empty(trim($data['codigo_cartao']))) {
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterStatusDispatichedRedeUzeDAO($cardsIssuedReportModel);
+                } else {
+                    // Se ambos o arquivo e o titular foram especificados, busca por ambos
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterStatusDispatichedCardCodeRedeUzeDAO($cardsIssuedReportModel);
+                }
+            } else if (!empty(trim($data['arquivo']))) {
                 // Se apenas o arquivo foi especificado
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileRedeUzeDAO($cardsIssuedReportModel);
-            } else if (
-                !empty(trim($data['arquivo']))
-                && !empty(trim($data['titular']))
-            ) {
-                $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileHolderRedeUzeDAO($cardsIssuedReportModel);
             } else if (!empty(trim($data['codigo_conta']))) {
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterAccountCodeRedeUzeDAO($cardsIssuedReportModel);
             } else if (!empty(trim($data['codigo_cartao']))) {
