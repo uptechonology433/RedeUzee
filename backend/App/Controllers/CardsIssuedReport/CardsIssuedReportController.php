@@ -100,7 +100,14 @@ final class CardsIssuedReportController
             ) {
 
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterDatesInGeneralRedeUzeDAO($cardsIssuedReportModel);
-            } else {
+            // }else if (
+            //     !empty(trim($data['arquivo']))
+            //     &&!empty(trim($data['expedicaoInicial'])) && !empty(trim($data['expedicaoFinal']))
+            //     && !empty(trim($data['dataInicial'])) && !empty(trim($data['dataFinal'])) 
+            // ) {
+
+            //     $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterDatesFileInGeneralRedeUzeDAO($cardsIssuedReportModel);
+            }else {
 
                 $cardsIssuedReport = "Preencha os campos corretamente!";
             }

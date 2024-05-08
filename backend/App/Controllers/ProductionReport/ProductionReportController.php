@@ -75,7 +75,14 @@ final class ProductionReportController
             ) {
 
                 $productionReport = $productionReportDAO->getCardsIssuedReportFilterDatesInGeneralRedeUzeDAO($productionReportModel);
-            } else {
+            }else if (
+                !empty(trim($data['arquivo']))
+                &&!empty(trim($data['expedicaoInicial'])) && !empty(trim($data['expedicaoFinal']))
+                && !empty(trim($data['dataInicial'])) && !empty(trim($data['dataFinal']))
+            ) {
+
+                $productionReport = $productionReportDAO->getCardsIssuedReportFilterDatesFileInGeneralRedeUzeDAO($productionReportModel);
+            }else {
 
                 $productionReport = "Preencha os campos corretamente!";
             }
