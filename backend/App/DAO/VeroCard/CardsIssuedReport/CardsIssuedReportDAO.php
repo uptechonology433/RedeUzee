@@ -163,6 +163,62 @@ class CardsIssuedReportDAO extends Connection
         return $response;
     }
 
+    public function getCardsIssuedReportFilterFileAccontCodeRedeUzeDAO(CardsIssuedReportModel $CardsIssuedReportModel): array
+    {
+        $statement = $this->pdo->prepare("SELECT 
+        nome_arquivo_proc,
+        titular,
+        nr_cartao,
+        rastreio,
+        codigo_conta,
+        desc_status,
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
+        codigo_cartao
+    FROM 
+        view_redeuze_relatorio_cartoes
+    WHERE 
+        nome_arquivo_proc = :arquivo
+        AND codigo_conta LIKE :codigo_conta");
+
+        $statement->execute([
+            'arquivo' => $CardsIssuedReportModel->getFile(), 
+            'codigo_conta' => '%' . $CardsIssuedReportModel->getAccountCode() . '%']);
+
+        $response = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $response;
+    }
+
+    public function getCardsIssuedReportFilterFileCardCodeRedeUzeDAO(CardsIssuedReportModel $CardsIssuedReportModel): array
+    {
+        $statement = $this->pdo->prepare("SELECT 
+        nome_arquivo_proc,
+        titular,
+        nr_cartao,
+        rastreio,
+        codigo_conta,
+        desc_status,
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
+        codigo_cartao
+    FROM 
+        view_redeuze_relatorio_cartoes
+    WHERE 
+        nome_arquivo_proc = :arquivo
+        AND codigo_cartao LIKE :codigo_cartao");
+
+        $statement->execute([
+            'arquivo' => $CardsIssuedReportModel->getFile(), 
+            'codigo_cartao' => '%' . $CardsIssuedReportModel->getCardCode() . '%']);
+
+        $response = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $response;
+    }
+
+    
+
     public function getCardsIssuedReportFilterFileHolderRedeUzeDAO(CardsIssuedReportModel $CardsIssuedReportModel): array
     {
         $statement = $this->pdo->prepare("SELECT 
@@ -172,8 +228,8 @@ class CardsIssuedReportDAO extends Connection
         rastreio,
         codigo_conta,
         desc_status,
-        dt_op,
-        dt_expedicao,
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         codigo_cartao
     FROM 
         view_redeuze_relatorio_cartoes

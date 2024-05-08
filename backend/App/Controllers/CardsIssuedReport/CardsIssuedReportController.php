@@ -62,13 +62,33 @@ final class CardsIssuedReportController
 
 
         if (!empty(trim($data['tipo'])) && $data['tipo'] === 'RedeUze') {
+            // Verifica se o titular foi especificado
             if (!empty(trim($data['titular']))) {
+                // Se apenas o arquivo foi especificado, busca pelo titular
                 if (empty(trim($data['arquivo']))) {
                     $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterHolderRedeUzeDAO($cardsIssuedReportModel);
                 } else {
+                    // Se ambos o arquivo e o titular foram especificados, busca por ambos
                     $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileHolderRedeUzeDAO($cardsIssuedReportModel);
                 }
-            } elseif (!empty(trim($data['arquivo']))) {
+            }else if (!empty(trim($data['codigo_conta']))) {
+                // Se apenas o arquivo foi especificado, busca pelo titular
+                if (empty(trim($data['arquivo']))) {
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterHolderRedeUzeDAO($cardsIssuedReportModel);
+                } else {
+                    // Se ambos o arquivo e o titular foram especificados, busca por ambos
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileHolderRedeUzeDAO($cardsIssuedReportModel);
+                }
+            }else if (!empty(trim($data['codigo_cartao']))) {
+                // Se apenas o arquivo foi especificado, busca pelo titular
+                if (empty(trim($data['arquivo']))) {
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterHolderRedeUzeDAO($cardsIssuedReportModel);
+                } else {
+                    // Se ambos o arquivo e o titular foram especificados, busca por ambos
+                    $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileHolderRedeUzeDAO($cardsIssuedReportModel);
+                }
+            }else if (!empty(trim($data['arquivo']))) {
+                // Se apenas o arquivo foi especificado
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileRedeUzeDAO($cardsIssuedReportModel);
             } else if (
                 !empty(trim($data['arquivo']))
