@@ -162,4 +162,33 @@ class CardsIssuedReportDAO extends Connection
 
         return $response;
     }
+
+    public function getCardsIssuedReportFilterFileHolderRedeUzeDAO(CardsIssuedReportModel $CardsIssuedReportModel): array
+    {
+        $statement = $this->pdo->prepare("SELECT 
+        nome_arquivo_proc,
+        titular,
+        nr_cartao,
+        rastreio,
+        codigo_conta,
+        desc_status,
+        dt_op,
+        dt_expedicao,
+        codigo_cartao
+    FROM 
+        view_redeuze_relatorio_cartoes
+    WHERE 
+        nome_arquivo_proc = :arquivo
+        AND titular LIKE :titular");
+
+        $statement->execute([
+            'arquivo' => $CardsIssuedReportModel->getFile(), 
+            'titular' => '%' . $CardsIssuedReportModel->getHolder() . '%']);
+
+        $response = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $response;
+    }
+
+    
 }
