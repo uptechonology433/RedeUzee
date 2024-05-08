@@ -72,14 +72,15 @@ const PageInactive: React.FC = () => {
                     />
                     <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} textButton={'Pesquisar'} onClickButton={handleSearch} />
                 </div>
+                {
+                    Array.isArray(inactiveData) && inactiveData.length >= 1 &&
+                    <Table
+                        data={inactiveData}
+                        column={columnsInactives}
+                        typeMessage={ProductionReportMessage}
 
-
-                <Table
-                    data={inactiveData}
-                    column={columnsInactives}
-                    typeMessage={ProductionReportMessage}
-              
-                />
+                    />
+                }
 
                 <div className="table-container-dowload">
 

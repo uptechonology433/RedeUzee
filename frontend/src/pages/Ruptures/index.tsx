@@ -109,13 +109,16 @@ const PageRuptures: React.FC = () => {
                     <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} textButton={'Pesquisar'} onClickButton={handleSearch} />
                 </div>
 
-                <Table
-                    data={rupturesData}
-                    column={columnsRuptures}
-                    typeMessage={ProductionReportMessage}
-                 
-                />
+                {
 
+                    Array.isArray(rupturesData) && rupturesData.length >= 1 &&
+                    <Table
+                        data={rupturesData}
+                        column={columnsRuptures}
+                        typeMessage={ProductionReportMessage}
+
+                    />
+                }
                 <div className="table-container-dowload">
 
                     <div className="scroll-table-dowload">

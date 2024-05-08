@@ -98,15 +98,16 @@ const PageWaste: React.FC = () => {
                     <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} textButton={'Pesquisar'} onClickButton={handleSearch} />
                 </div>
 
+                {
+                    Array.isArray(wasteData) && wasteData.length >= 1 &&
+                    <Table
+                        data={wasteData}
+                        column={columnsWaste}
+                        typeMessage={ProductionReportMessage}
 
-                <Table
-                    data={wasteData}
-                    column={columnsWaste}
-                    typeMessage={ProductionReportMessage}
-               
 
-                />
-
+                    />
+                }
                 <div className="table-container-dowload">
 
                     <div className="scroll-table-dowload">
