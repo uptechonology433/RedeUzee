@@ -135,6 +135,7 @@ const PageRuptures: React.FC = () => {
 
 
                                 {
+                                    Array.isArray(rupturesData) &&
                                     rupturesData.map((data: any) =>
                                         <tr key={data.id}>
                                             <td>{data['COD PROD']}</td>

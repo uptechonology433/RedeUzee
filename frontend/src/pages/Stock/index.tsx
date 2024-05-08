@@ -187,6 +187,7 @@ const PageStock: React.FC = () => {
 
 
                                 {
+                                     Array.isArray(stockData) &&
                                     stockData.map((data: any) =>
                                         <tr key={data.id}>
                                             <td>{data.desc_produto}</td>

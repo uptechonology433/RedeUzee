@@ -211,6 +211,7 @@ const PageProductionReport: React.FC = () => {
 
 
                                 {
+                                    Array.isArray(ProductionReportData) &&
                                     ProductionReportData.map((data: any, index: number) =>
                                         <tr key={index}>
                                             <td>{data.nome_arquivo_proc}</td>
