@@ -34,7 +34,7 @@ const PageStock: React.FC = () => {
 
     const ProductionReportRequests = async () => {
 
-        if (formValues.activeType === 'Sim' || formValues.activeType === 'Não') {
+        if (formValues.activeType === 'SIM' || formValues.activeType === 'NÃO') {
 
             await api.post('/stock', {
                 ativo: formValues.activeType,
@@ -101,7 +101,7 @@ const PageStock: React.FC = () => {
     ];
 
 
-   
+
 
     const refExcel: any = useRef();
 
@@ -119,9 +119,9 @@ const PageStock: React.FC = () => {
             <div className="container-stock">
 
                 <Select info={"Selecione um tipo de ativo:"} name="activeType" onChange={handleChange}>
-                    <option selected>Selecione um ativo...</option>
-                    <option value="Sim">Sim</option>
-                    <option value="Não">Não</option>
+                    <option value="">Tudo</option> {/* Adicionando a opção "Tudo" */}
+                    <option value="SIM">Sim</option>
+                    <option value="NÃO">Não</option>
                 </Select>
 
                 <div className="inputs-info-products">
@@ -130,7 +130,7 @@ const PageStock: React.FC = () => {
                 </div>
 
                 {
-                     quantityofMaterialsData.length >= 1 &&
+                    quantityofMaterialsData.length >= 1 &&
 
                     <div className="container-quantity-of-materials">
                         <p>Total de materiais por pesquisa:</p>
@@ -187,7 +187,7 @@ const PageStock: React.FC = () => {
 
 
                                 {
-                                     Array.isArray(stockData) &&
+                                    Array.isArray(stockData) &&
                                     stockData.map((data: any) =>
                                         <tr key={data.id}>
                                             <td>{data.desc_produto}</td>
@@ -212,7 +212,7 @@ const PageStock: React.FC = () => {
 
                 </div>
 
-                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} textButton={'Pesquisar'} onClickButton={() => ProductionReportRequests()}  />
+                <DownloadFacilitators excelClick={() => onDownload()} printClick={() => window.print()} textButton={'Pesquisar'} onClickButton={() => ProductionReportRequests()} />
 
             </div>
 
