@@ -70,13 +70,17 @@ const PageCardsIssued: React.FC = () => {
       name: 'Status',
       selector: (row: any) => row.desc_status
     },
-
     {
-      name: 'Data Pross',
+      name: 'Entrada',
       selector: (row: any) => row.dt_op
     },
+
     {
-      name: 'Data Expedido',
+      name: 'Processado',
+      selector: (row: any) => row.dt_processamento
+    },
+    {
+      name: 'Expedido',
       selector: (row: any) => row.dt_expedicao
     },
     {
@@ -221,8 +225,9 @@ const PageCardsIssued: React.FC = () => {
                   <td>Cod Conta</td>
                   <td>Status</td>
                   <td>Tipo Envio</td>
-                  <td>Data Pross</td>
-                  <td>Data Expedido</td>
+                  <td>Entrada</td>
+                  <td>Processado</td>
+                  <td>Expedido</td>
                   <td>Cod Cartão</td>
                 </tr>
               </tbody>
@@ -236,6 +241,7 @@ const PageCardsIssued: React.FC = () => {
                   <td>{data.desc_status}</td>
                   <td>CLIENTE - FLASH COURIER</td>
                   <td>{data.dt_op}</td>
+                  <td>{data.dt_processamento}</td>
                   <td>{data.dt_expedicao}</td>
                   <td>{data.codigo_cartao}</td>
                 </tr>

@@ -18,7 +18,7 @@ class CardsIssuedReportDAO extends Connection
 
         $statement = $this->pdo->prepare("SELECT  titular, nr_cartao,rastreio,
         codigo_conta,desc_status,codigo_cartao,
-         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
         desc_status from view_redeuze_relatorio_cartoes WHERE nome_arquivo_proc = :arquivo");
@@ -35,7 +35,7 @@ class CardsIssuedReportDAO extends Connection
 
         $statement = $this->pdo->prepare("SELECT  titular, nr_cartao,rastreio,
         codigo_conta,desc_status,codigo_cartao,
-         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento,
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
          desc_status  from view_redeuze_relatorio_cartoes  where dt_op BETWEEN :datainicial AND :datafinal ;");
@@ -51,7 +51,7 @@ class CardsIssuedReportDAO extends Connection
     {
         $statement = $this->pdo->prepare("SELECT  titular, nr_cartao,rastreio,
         codigo_conta,desc_status,codigo_cartao,
-         to_char(dt_op, 'DD/MM/YYYY') AS dt_op,  
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento,
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
          desc_status from view_redeuze_relatorio_cartoes  where dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal ;");
@@ -68,7 +68,7 @@ class CardsIssuedReportDAO extends Connection
     {
         $statement = $this->pdo->prepare("SELECT titular, nr_cartao,rastreio,
         codigo_conta,desc_status,codigo_cartao,
-         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento,
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
          desc_status FROM view_redeuze_relatorio_cartoes  where (dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal) AND (dt_op BETWEEN :datainicial AND :datafinal);");
@@ -85,7 +85,7 @@ class CardsIssuedReportDAO extends Connection
     {
         $statement = $this->pdo->prepare("SELECT titular, nr_cartao,rastreio,
         codigo_conta,desc_status,codigo_cartao,
-         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
          desc_status FROM view_redeuze_relatorio_cartoes  WHERE titular LIKE :titular");
@@ -101,7 +101,7 @@ class CardsIssuedReportDAO extends Connection
     {
         $statement = $this->pdo->prepare("SELECT titular, nr_cartao,rastreio,
         codigo_conta,desc_status,codigo_cartao,
-         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
          desc_status FROM view_redeuze_relatorio_cartoes  WHERE codigo_conta LIKE :codigo_conta");
@@ -117,7 +117,7 @@ class CardsIssuedReportDAO extends Connection
     {
         $statement = $this->pdo->prepare("SELECT titular, nr_cartao,rastreio,
         codigo_conta,desc_status,codigo_cartao,
-         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
          desc_status FROM view_redeuze_relatorio_cartoes  WHERE codigo_cartao LIKE :codigo_cartao");
@@ -135,7 +135,7 @@ class CardsIssuedReportDAO extends Connection
     {
         $statement = $this->pdo->prepare("SELECT titular, nr_cartao,rastreio,
         codigo_conta,desc_status,codigo_cartao,
-         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
          desc_status FROM view_redeuze_relatorio_cartoes  WHERE desc_status LIKE 'EM PRODUÇÃO'");
@@ -154,7 +154,7 @@ class CardsIssuedReportDAO extends Connection
     {
         $statement = $this->pdo->prepare("SELECT titular, nr_cartao,rastreio,
         codigo_conta,desc_status,codigo_cartao,
-         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
          desc_status FROM view_redeuze_relatorio_cartoes  WHERE desc_status LIKE 'EXPEDIDO'");
@@ -175,7 +175,7 @@ class CardsIssuedReportDAO extends Connection
         rastreio,
         codigo_conta,
         desc_status,
-        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         codigo_cartao
     FROM 
@@ -202,7 +202,7 @@ class CardsIssuedReportDAO extends Connection
         rastreio,
         codigo_conta,
         desc_status,
-        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         codigo_cartao
     FROM 
@@ -231,7 +231,7 @@ class CardsIssuedReportDAO extends Connection
         rastreio,
         codigo_conta,
         desc_status,
-        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         codigo_cartao
     FROM 
@@ -258,7 +258,7 @@ class CardsIssuedReportDAO extends Connection
         rastreio,
         codigo_conta,
         desc_status,
-        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         codigo_cartao
     FROM 
@@ -285,7 +285,7 @@ class CardsIssuedReportDAO extends Connection
         rastreio,
         codigo_conta,
         desc_status,
-        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         codigo_cartao
     FROM 
@@ -312,7 +312,7 @@ class CardsIssuedReportDAO extends Connection
         rastreio,
         codigo_conta,
         desc_status,
-        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         codigo_cartao
     FROM 
@@ -334,12 +334,13 @@ class CardsIssuedReportDAO extends Connection
     {
         $statement = $this->pdo->prepare("SELECT 
         nome_arquivo_proc,
+        
         titular,
         nr_cartao,
         rastreio,
         codigo_conta,
         desc_status,
-        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         codigo_cartao
     FROM 

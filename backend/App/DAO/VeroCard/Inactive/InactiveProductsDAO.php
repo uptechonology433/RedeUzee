@@ -13,7 +13,7 @@ class InactiveProductsDAO extends Connection
 
     public function getAllInactiveProducts(): array
     {
-        $query = "SELECT * FROM view_dmcard_relatorio_produtos_inativos WHERE LENGTH(cod_produto) = 5";
+        $query = "SELECT * FROM view_redeuze_relatorio_inativos ";
     
         $inactiveProducts = $this->pdo
             ->query($query)
@@ -26,10 +26,9 @@ class InactiveProductsDAO extends Connection
     {
         $searchTerm = '%' . $searchTerm . '%';
     
-        $query = "SELECT * FROM view_dmcard_relatorio_produtos_inativos 
+        $query = "SELECT * FROM view_redeuze_relatorio_inativos 
                   WHERE (cod_produto LIKE :searchTerm 
-                  OR desc_produto LIKE :searchTerm)
-                  AND LENGTH(cod_produto) = 5";
+                  OR desc_produto LIKE :searchTerm)";
     
         $statement = $this->pdo->prepare($query);
         $statement->bindParam(':searchTerm', $searchTerm, \PDO::PARAM_STR);
