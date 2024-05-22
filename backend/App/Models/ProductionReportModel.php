@@ -12,6 +12,11 @@ final class ProductionReportModel
      /**
      * @var string
      */
+    private $inputDate;
+
+     /**
+     * @var string
+     */
     private $cardType;
     /**
      * @var string
@@ -41,6 +46,21 @@ final class ProductionReportModel
     {
 
         $this -> file = $file;
+
+        return $this;
+    }
+
+    
+    public function getInputDate(): string
+    {
+        return $this -> inputDate;
+    }
+
+    
+    public function setInputDate(string $inputDate):  ProductionReportModel
+    {
+
+        $this -> inputDate = $inputDate;
 
         return $this;
     }

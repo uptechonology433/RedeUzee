@@ -47,6 +47,26 @@ class CardsIssuedReportDAO extends Connection
         return $response;
     }
 
+
+    
+
+    public function getCardsIssuedReportFilterInputDateRedeUzeDAO(CardsIssuedReportModel $CardsIssuedReportModel): array
+    {
+
+        $statement = $this->pdo->prepare("SELECT  titular, nr_cartao,rastreio,
+        codigo_conta,desc_status,codigo_cartao,
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op,to_char(dt_op, 'DD/MM/YYYY') AS dt_processamento,
+         to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
+         nome_arquivo_proc,
+         desc_status  from view_redeuze_relatorio_cartoes  where dt_op::date =:dataentrada;");
+
+        $statement->execute(['dataentrada' => $CardsIssuedReportModel->getInputDate()]);
+
+        $response = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $response;
+    }
+
     public function getCardsIssuedReportFilterShippingRedeUzeDAO(CardsIssuedReportModel $CardsIssuedReportModel): array
     {
         $statement = $this->pdo->prepare("SELECT  titular, nr_cartao,rastreio,

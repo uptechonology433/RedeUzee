@@ -18,6 +18,7 @@ final class ProductionReportController
         if (
             empty(trim($data['arquivo'])) &&
             empty(trim($data['tipo'])) &&
+            empty(trim($data['dataentrada'])) &&
             empty(trim($data['dataInicial'])) &&
             empty(trim($data['dataFinal'])) &&
             empty(trim($data['expedicaoInicial'])) &&
@@ -46,6 +47,7 @@ final class ProductionReportController
         $productionReportModel
             ->setFile(trim($data['arquivo']))
             ->setCardType(trim($data['tipo']))
+            ->setInputDate(trim($data['dataentrada']))
             ->setInitialProcessinDate(trim($data['dataInicial']))
             ->setFinalProcessinDate(trim($data['dataFinal']))
             ->setInitialShippingdate(trim($data['expedicaoInicial']))
@@ -57,6 +59,9 @@ final class ProductionReportController
             if (!empty(trim($data['arquivo']))) {
 
                 $productionReport = $productionReportDAO->getProductionReportFilterFileDAO($productionReportModel);
+            }else if(!empty(trim($data['dataentrada']))){
+                $productionReport = $productionReportDAO->getCardsIssuedReportFilterInputDateRedeUzeDAO($productionReportModel);
+            
             } else if (
                 !empty(trim($data['dataInicial'])) && !empty(trim($data['dataFinal']))
                 && empty(trim($data['expedicaoInicial'])) && empty(trim($data['expedicaoFinal']))

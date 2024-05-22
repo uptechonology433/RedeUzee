@@ -22,6 +22,7 @@ final class CardsIssuedReportController
             empty(trim($data['codigo_cartao'])) &&
             empty(trim($data['desc_status'])) &&
             empty(trim($data['tipo'])) &&
+            empty(trim($data['dataentrada'])) &&
             empty(trim($data['dataInicial'])) &&
             empty(trim($data['dataFinal'])) &&
             empty(trim($data['expedicaoInicial'])) &&
@@ -55,6 +56,7 @@ final class CardsIssuedReportController
             ->setStatusInProduction(trim($data['desc_status']))
             ->setStatusDispatched(trim($data['desc_status']))
             ->setCardType(trim($data['tipo']))
+            ->setInputDate(trim($data['dataentrada']))
             ->setInitialProcessinDate(trim($data['dataInicial']))
             ->setFinalProcessinDate(trim($data['dataFinal']))
             ->setInitialShippingdate(trim($data['expedicaoInicial']))
@@ -122,7 +124,9 @@ final class CardsIssuedReportController
             } else if (!empty(trim($data['arquivo']))) {
                 // Se apenas o arquivo foi especificado
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileRedeUzeDAO($cardsIssuedReportModel);
-            } else if (!empty(trim($data['codigo_conta']))) {
+            }else if(!empty(trim($data['dataentrada']))){
+                $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterInputDateRedeUzeDAO($cardsIssuedReportModel);
+            }else if (!empty(trim($data['codigo_conta']))) {
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterAccountCodeRedeUzeDAO($cardsIssuedReportModel);
             } else if (!empty(trim($data['codigo_cartao']))) {
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterCardCodeRedeUzeDAO($cardsIssuedReportModel);
@@ -130,6 +134,7 @@ final class CardsIssuedReportController
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterStatusInProductionRedeUzeDAO($cardsIssuedReportModel);
             } else if (!empty(trim($data['desc_status'])) && $data['desc_status'] === 'Expedido') {
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterStatusDispatichedRedeUzeDAO($cardsIssuedReportModel);
+           
             } else if (
                 !empty(trim($data['dataInicial'])) && !empty(trim($data['dataFinal']))
                 && empty(trim($data['expedicaoInicial'])) && empty(trim($data['expedicaoFinal']))

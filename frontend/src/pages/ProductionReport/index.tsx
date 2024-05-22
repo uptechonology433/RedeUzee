@@ -33,6 +33,7 @@ const PageProductionReport: React.FC = () => {
         InitialShippingDate: "",
 
         FinalShippingDate: "",
+        InputDate: "",
 
         cardType: "RedeUze"
 
@@ -51,11 +52,15 @@ const PageProductionReport: React.FC = () => {
             selector: (row: any) => row.nome_arquivo_proc
         },
         {
-            name: 'Data Processamento',
-            selector: (row: any) => row.dt_processamento
+            name: 'Entrada',
+            selector: (row: any) => row.dt_op
         },
         {
-            name: 'Data Expedição',
+            name: 'Processamento',
+            selector: (row: any) => row.dt_op
+        },
+        {
+            name: 'Expedição',
             selector: (row: any) => row.dt_expedicao
         },
 
@@ -80,14 +85,15 @@ const PageProductionReport: React.FC = () => {
 
             if (formValues.InitialProcessingDate < formValues.FinalProcessingDate
                 || formValues.InitialShippingDate < formValues.FinalShippingDate
-                || formValues.fileName) {
+                || formValues.fileName || formValues.InputDate) {
                 await api.post('/production-report', {
                     arquivo: formValues.fileName,
                     tipo: formValues.cardType,
+                    dataentrada: formValues.InputDate,
                     dataInicial: formValues.InitialProcessingDate,
                     dataFinal: formValues.FinalProcessingDate,
                     expedicaoInicial: formValues.InitialShippingDate,
-                    expedicaoFinal: formValues.FinalShippingDate
+                    expedicaoFinal: formValues.FinalShippingDate,
                 }).then((data) => {
 
                     setProductionReportData(data.data)
@@ -160,6 +166,8 @@ const PageProductionReport: React.FC = () => {
 
                     </div>
 
+
+
                     <div className="inputs">
 
                         <Input type="date" name="InitialProcessingDate" info="Data de processamento inicial:" onChange={handleChange} />
@@ -175,6 +183,11 @@ const PageProductionReport: React.FC = () => {
                         <Input type="date" name="FinalShippingDate" info="Data de expedição final:" onChange={handleChange} />
                     </div>
 
+                    <div className="inputs">
+
+                        <Input type="date" name="InputDate" info="Data Entrada:" onChange={handleChange} />
+                    </div>
+
                 </div>
 
 
@@ -185,7 +198,7 @@ const PageProductionReport: React.FC = () => {
                         column={columnsProductionReport}
                         data={ProductionReportData}
                         typeMessage={ProductionReportMessage}
-                       
+
                     />
 
                 }
@@ -202,8 +215,9 @@ const PageProductionReport: React.FC = () => {
 
                                 <tr>
                                     <td>Nome Arquivo</td>
-                                    <td>Data Processamento</td>
-                                    <td>Data Expedição</td>
+                                    <td>Entrada</td>
+                                    <td>Processamento</td>
+                                    <td>Expedição</td>
                                     <td>Status</td>
                                     <td>Qtd cartões</td>
 
@@ -215,7 +229,8 @@ const PageProductionReport: React.FC = () => {
                                     ProductionReportData.map((data: any, index: number) =>
                                         <tr key={index}>
                                             <td>{data.nome_arquivo_proc}</td>
-                                            <td>{data.dt_processamento}</td>
+                                            <td>{data.dt_op}</td>
+                                            <td>{data.dt_op}</td>
                                             <td>{data.dt_expedicao}</td>
                                             <td>{data.status}</td>
                                             <td>{data.total_cartoes}</td>

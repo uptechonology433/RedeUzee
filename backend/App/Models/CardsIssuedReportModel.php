@@ -39,6 +39,13 @@ final class CardsIssuedReportModel
      * @var string
      */
     private $cardType;
+
+      /**
+     * @var string
+     */
+    private $inputDate;
+
+    
     /**
      * @var string
      */
@@ -63,10 +70,26 @@ final class CardsIssuedReportModel
         return $this -> file;
     }
 
+  
+
     public function setFile(string $file): CardsIssuedReportModel
     {
 
         $this -> file = $file;
+
+        return $this;
+    }
+
+    public function getInputDate(): string
+    {
+        return $this -> inputDate;
+    }
+
+    
+    public function setInputDate(string $inputDate): CardsIssuedReportModel
+    {
+
+        $this -> inputDate = $inputDate;
 
         return $this;
     }

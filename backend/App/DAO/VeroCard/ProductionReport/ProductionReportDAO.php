@@ -17,7 +17,7 @@ class ProductionReportDAO extends Connection
     {
 
         $statement = $this->pdo->prepare("SELECT
-         to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
       
@@ -35,11 +35,11 @@ class ProductionReportDAO extends Connection
 
         $statement = $this->pdo->prepare("SELECT 
       
-         to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
       
-        total_cartoes, status from view_redeuze_producao where dt_processamento BETWEEN :datainicial AND :datafinal ;");
+        total_cartoes, status from view_redeuze_producao where dt_op BETWEEN :datainicial AND :datafinal ;");
 
         $statement->execute(['datainicial' => $productionReportModel->getInitialProcessinDate(), 'datafinal' => $productionReportModel->getFinalProcessinDate()]);
 
@@ -48,11 +48,30 @@ class ProductionReportDAO extends Connection
         return $response;
     }
 
+    public function getCardsIssuedReportFilterInputDateRedeUzeDAO(ProductionReportModel $productionReportModel): array
+    {
+
+        $statement = $this->pdo->prepare("SELECT 
+      
+        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+        to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
+        nome_arquivo_proc,
+     
+       total_cartoes, status from view_redeuze_producao  where dt_op::date =:dataentrada;");
+
+        $statement->execute(['dataentrada' => $productionReportModel->getInputDate()]);
+
+        $response = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $response;
+    }
+
+
     public function getProductionReportFilterShippingDAO(ProductionReportModel $productionReportModel): array
     {
         $statement = $this->pdo->prepare("SELECT
      
-         to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento, 
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
          to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
          nome_arquivo_proc,
         total_cartoes, status from view_redeuze_producao where dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal ;");
@@ -65,10 +84,10 @@ class ProductionReportDAO extends Connection
     }
     public function getCardsIssuedReportFilterDatesInGeneralRedeUzeDAO(ProductionReportModel $productionReportModel): array
     {
-        $statement = $this->pdo->prepare("SELECT   to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento, 
+        $statement = $this->pdo->prepare("SELECT   to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
         to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         nome_arquivo_proc,
-       total_cartoes, status from view_redeuze_producao  where (dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal) AND (dt_processamento BETWEEN :datainicial AND :datafinal);");
+       total_cartoes, status from view_redeuze_producao  where (dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal) AND (dt_op BETWEEN :datainicial AND :datafinal);");
 
         $statement->execute(['expedicaoinicial' => $productionReportModel->getInitialShippingdate(), 'expedicaofinal' => $productionReportModel->getFinalShippingdate(), 'datainicial' => $productionReportModel->getInitialProcessinDate(), 'datafinal' => $productionReportModel->getFinalProcessinDate(), 'arquivo' => $productionReportModel->getFile()]);
 
@@ -79,10 +98,10 @@ class ProductionReportDAO extends Connection
 
     public function getCardsIssuedReportFilterDatesFileInGeneralRedeUzeDAO(ProductionReportModel $productionReportModel): array
     {
-        $statement = $this->pdo->prepare("SELECT   to_char(dt_processamento, 'DD/MM/YYYY') AS dt_processamento, 
+        $statement = $this->pdo->prepare("SELECT   to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
         to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
         nome_arquivo_proc,
-       total_cartoes, status from view_redeuze_producao  where (dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal) AND (dt_processamento BETWEEN :datainicial AND :datafinal) AND nome_arquivo_proc = :arquivo;");
+       total_cartoes, status from view_redeuze_producao  where (dt_expedicao BETWEEN :expedicaoinicial AND :expedicaofinal) AND (dt_op BETWEEN :datainicial AND :datafinal) AND nome_arquivo_proc = :arquivo;");
 
         $statement->execute(['expedicaoinicial' => $productionReportModel->getInitialShippingdate(), 'expedicaofinal' => $productionReportModel->getFinalShippingdate(), 'datainicial' => $productionReportModel->getInitialProcessinDate(), 'datafinal' => $productionReportModel->getFinalProcessinDate()]);
 
