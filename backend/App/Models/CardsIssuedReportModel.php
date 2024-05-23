@@ -44,8 +44,13 @@ final class CardsIssuedReportModel
      * @var string
      */
     private $inputDate;
-
     
+     /**
+     * @var string
+     */
+    private $inputDateFinish;
+
+
     /**
      * @var string
      */
@@ -90,6 +95,20 @@ final class CardsIssuedReportModel
     {
 
         $this -> inputDate = $inputDate;
+
+        return $this;
+    }
+
+    public function getInputDateFinish(): string
+    {
+        return $this -> inputDateFinish;
+    }
+
+    
+    public function setInputDateFinish(string $inputDateFinish):  CardsIssuedReportModel
+    {
+
+        $this -> inputDateFinish = $inputDateFinish;
 
         return $this;
     }

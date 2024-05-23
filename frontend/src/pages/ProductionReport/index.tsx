@@ -34,6 +34,7 @@ const PageProductionReport: React.FC = () => {
 
         FinalShippingDate: "",
         InputDate: "",
+        InputDateFinish: "",
 
         cardType: "RedeUze"
 
@@ -85,11 +86,12 @@ const PageProductionReport: React.FC = () => {
 
             if (formValues.InitialProcessingDate < formValues.FinalProcessingDate
                 || formValues.InitialShippingDate < formValues.FinalShippingDate
-                || formValues.fileName || formValues.InputDate) {
+                || formValues.fileName || formValues.InputDate < formValues.InputDateFinish) {
                 await api.post('/production-report', {
                     arquivo: formValues.fileName,
                     tipo: formValues.cardType,
                     dataentrada: formValues.InputDate,
+                    dataentradafinal: formValues.InputDateFinish,
                     dataInicial: formValues.InitialProcessingDate,
                     dataFinal: formValues.FinalProcessingDate,
                     expedicaoInicial: formValues.InitialShippingDate,
@@ -185,7 +187,8 @@ const PageProductionReport: React.FC = () => {
 
                     <div className="inputs">
 
-                        <Input type="date" name="InputDate" info="Data Entrada:" onChange={handleChange} />
+                        <Input type="date" name="InputDate" info="Data Entrada Inicial:" onChange={handleChange} />
+                        <Input type="date" name="InputDateFinish" info="Data Entrada Final:" onChange={handleChange} />
                     </div>
 
                 </div>

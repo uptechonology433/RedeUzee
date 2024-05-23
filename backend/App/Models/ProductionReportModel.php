@@ -14,6 +14,13 @@ final class ProductionReportModel
      */
     private $inputDate;
 
+    
+     /**
+     * @var string
+     */
+    private $inputDateFinish;
+
+
      /**
      * @var string
      */
@@ -61,6 +68,21 @@ final class ProductionReportModel
     {
 
         $this -> inputDate = $inputDate;
+
+        return $this;
+    }
+
+      
+    public function getInputDateFinish(): string
+    {
+        return $this -> inputDateFinish;
+    }
+
+    
+    public function setInputDateFinish(string $inputDateFinish):  ProductionReportModel
+    {
+
+        $this -> inputDateFinish = $inputDateFinish;
 
         return $this;
     }

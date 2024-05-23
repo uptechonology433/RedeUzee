@@ -53,18 +53,19 @@ class ProductionReportDAO extends Connection
 
         $statement = $this->pdo->prepare("SELECT 
       
-        to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
-        to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
-        nome_arquivo_proc,
-     
-       total_cartoes, status from view_redeuze_producao  where dt_op::date =:dataentrada;");
+         to_char(dt_op, 'DD/MM/YYYY') AS dt_op, 
+         to_char(dt_expedicao, 'DD/MM/YYYY') AS dt_expedicao,
+         nome_arquivo_proc,
+      
+        total_cartoes, status from view_redeuze_producao where dt_op BETWEEN :dataentrada AND :dataentradafinal ;");
 
-        $statement->execute(['dataentrada' => $productionReportModel->getInputDate()]);
+        $statement->execute(['dataentrada' => $productionReportModel->getInputDate(), 'dataentradafinal' => $productionReportModel->getInputDateFinish()]);
 
         $response = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
         return $response;
     }
+
 
 
     public function getProductionReportFilterShippingDAO(ProductionReportModel $productionReportModel): array

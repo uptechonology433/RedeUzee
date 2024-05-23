@@ -28,8 +28,9 @@ const PageCardsIssued: React.FC = () => {
     InitialShippingDate: "",
 
     FinalShippingDate: "",
-    
+
     InputDate: "",
+    InputDateFinish: "",
 
     cardType: "RedeUze",
 
@@ -96,12 +97,13 @@ const PageCardsIssued: React.FC = () => {
   const CardsIssuedReportRequests = async () => {
     if (formValues.cardType === 'RedeUze') {
       if (formValues.InitialProcessingDate < formValues.FinalProcessingDate
-        || formValues.InitialShippingDate < formValues.FinalShippingDate || formValues.InputDate
+        || formValues.InitialShippingDate < formValues.FinalShippingDate || formValues.InputDate < formValues.InputDateFinish
         || formValues.fileName || formValues.holder || formValues.accontCode || formValues.cardCode || formValues.status) {
         await api.post('/cardsissued-report', {
           arquivo: formValues.fileName,
           tipo: formValues.cardType,
           dataentrada: formValues.InputDate,
+          dataentradafinal: formValues.InputDateFinish,
           dataInicial: formValues.InitialProcessingDate,
           dataFinal: formValues.FinalProcessingDate,
           expedicaoInicial: formValues.InitialShippingDate,
@@ -198,15 +200,18 @@ const PageCardsIssued: React.FC = () => {
           </div>
 
           <div className="inputs">
-           
 
-              <Input type="date" name="InputDate" info="Data Entrada:" onChange={handleChange} />
-           
+
+            <Input type="date" name="InputDate" info="Data Entrada Inicial:" onChange={handleChange} />
+            <Input type="date" name="InputDateFinish" info="Data Entrada Final:" onChange={handleChange} />
+          </div>
+
+          <div className="inputs">
             <Select info={"Tipo de Envio:"} onChange>
               <option value="CFC" selected>Cliente-Flash Courier</option>
             </Select>
-
           </div>
+
         </div>
 
         {

@@ -23,6 +23,7 @@ final class CardsIssuedReportController
             empty(trim($data['desc_status'])) &&
             empty(trim($data['tipo'])) &&
             empty(trim($data['dataentrada'])) &&
+            empty(trim($data['dataentradafinal'])) &&
             empty(trim($data['dataInicial'])) &&
             empty(trim($data['dataFinal'])) &&
             empty(trim($data['expedicaoInicial'])) &&
@@ -57,6 +58,7 @@ final class CardsIssuedReportController
             ->setStatusDispatched(trim($data['desc_status']))
             ->setCardType(trim($data['tipo']))
             ->setInputDate(trim($data['dataentrada']))
+            ->setInputDateFinish(trim($data['dataentradafinal']))
             ->setInitialProcessinDate(trim($data['dataInicial']))
             ->setFinalProcessinDate(trim($data['dataFinal']))
             ->setInitialShippingdate(trim($data['expedicaoInicial']))
@@ -124,7 +126,7 @@ final class CardsIssuedReportController
             } else if (!empty(trim($data['arquivo']))) {
                 // Se apenas o arquivo foi especificado
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterFileRedeUzeDAO($cardsIssuedReportModel);
-            }else if(!empty(trim($data['dataentrada']))){
+            }else if(!empty(trim($data['dataentrada'])) && !empty(trim($data['dataentradafinal']))){
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterInputDateRedeUzeDAO($cardsIssuedReportModel);
             }else if (!empty(trim($data['codigo_conta']))) {
                 $cardsIssuedReport = $cardsIssuedReportDAO->getCardsIssuedReportFilterAccountCodeRedeUzeDAO($cardsIssuedReportModel);
